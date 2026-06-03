@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Bhatia Employment Pvt Ltd - Elite International Manpower Consultancy since 1973.">
+    <meta name="theme-color" content="#EFE7D8">
+    <title>About Us | Bhatia Employment Pvt Ltd</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bepl-bg': '#F7F2E8', 
+                        'bepl-dark': '#EFE7D8', 
+                        'bepl-gold': '#B7924E', 
+                        'bepl-card': '#F2EBDF',
+                        'bepl-blue': '#2F4E73',
+                        'bepl-text-main': '#1F2937',
+                        'bepl-text-body': '#4B5563',
+                        'bepl-text-muted': '#6B7280',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        /* Standard Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Diagonal Sheen Animation for Founders */
+        .sheen-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .sheen-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.4) 50%, 
+                rgba(255,255,255,0) 100%
+            );
+            transform: skewX(-25deg);
+            z-index: 20;
+            pointer-events: none;
+        }
+        .sheen-container.active::before {
+            animation: sheenSweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.4s;
+        }
+        @keyframes sheenSweep {
+            0% { left: -150%; }
+            100% { left: 150%; }
+        }
+
+        .hero-fade-in {
+            animation: fadeInHero 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeInHero {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="bg-bepl-bg text-bepl-text-body font-sans subpixel-antialiased overflow-x-hidden selection:bg-bepl-gold selection:text-bepl-bg">
+
+    <!-- HEADER (Navigation Ribbon) -->
+    <header class="bg-bepl-dark px-6 lg:px-10 py-3 lg:py-4 border-b border-bepl-blue/10 w-full shrink-0 z-50 sticky top-0">
+        <div class="max-w-[1500px] mx-auto flex justify-between items-center w-full">
+            <a href="index.html" aria-label="Bhatia Employment Pvt Ltd Home" class="flex items-center shrink-0 border-none outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">
+                <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd Logo" class="h-10 lg:h-12 w-auto object-contain transform scale-[1.2] lg:scale-[1.3] origin-left">
+            </a>
+            <nav aria-label="Main Navigation" class="hidden lg:block">
+                <ul class="flex space-x-6 xl:space-x-10 text-xs font-bold uppercase tracking-[0.15em] text-bepl-text-main items-center">
+                    <li><a href="index.html" class="hover:text-bepl-gold transition-colors pb-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">HOME</a></li>
+                    <li><a href="about.html" class="text-bepl-gold border-b-2 border-bepl-gold pb-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm" aria-current="page">ABOUT US</a></li>
+                    <li><a href="services.html" class="hover:text-bepl-gold transition-colors pb-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">SERVICES</a></li>
+                    <li><a href="underconstruction.html" class="hover:text-bepl-gold transition-colors pb-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">CURRENT VACANCIES</a></li>
+                    <li><a href="underconstruction.html" class="hover:text-bepl-gold transition-colors pb-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">OUR CLIENTS</a></li>
+                    <li>
+                        <a href="contact.html" class="bg-bepl-blue text-[#F7F2E8] px-6 py-2.5 rounded-sm hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(47,78,115,0.2)] transition-all duration-300 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold focus-visible:ring-offset-2 focus-visible:ring-offset-bepl-dark">
+                            CONTACT US
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERITAGE HERO SECTION -->
+        <section class="relative w-full min-h-[70vh] flex items-center justify-center overflow-hidden border-b border-bepl-blue/10">
+            <div class="absolute inset-0 z-0 bg-[#111]">
+                <img src="arvind-building-hero.jpg" alt="Heritage Headquarters Building" fetchpriority="high" class="w-full h-full object-cover object-center opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-t from-bepl-bg via-bepl-bg/70 to-bepl-bg/20"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-10 text-center hero-fade-in pt-20 pb-12">
+                <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-6 block">Company Introduction</span>
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-bepl-text-main mb-8 leading-[1.1]">
+                    Pioneering Human Resource <br/>Excellence Since 1973.
+                </h1>
+                <div class="w-24 h-[1px] bg-bepl-gold/50 mx-auto mb-8"></div>
+                <p class="text-lg md:text-xl text-bepl-text-main font-medium max-w-3xl mx-auto leading-relaxed">
+                    For three generations, we have been the architects of global workforces. Born from a vision to elevate Indian talent on the world stage, our legacy is built on precision, trust, and the seamless deployment of skilled professionals across premier international industries. We don't just fill positions; we engineer futures.
+                </p>
+            </div>
+        </section>
+
+        <!-- THE VISIONARIES (LEADERSHIP) -->
+        <section class="w-full bg-bepl-bg py-24 lg:py-32 px-6 lg:px-10">
+            <div class="max-w-[1500px] mx-auto w-full">
+                <div class="text-center mb-20 reveal">
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">The Visionaries</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Three Generations of Excellence.</h2>
+                </div>
+
+                <!-- Tier 1: The Founders (With Sheen & Correct Proportions) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20 items-start">
+                    
+                    <!-- L.C. Bhatia (Landscape Aspect Ratio) -->
+                    <article class="reveal flex flex-col items-center lg:items-start text-center lg:text-left w-full group">
+                        <figure class="sheen-container w-full aspect-[4/3] mb-8 border border-bepl-blue/10 shadow-sm relative">
+                            <img src="lc-bhatia-portrait.png" alt="Portrait of Late Shri Laxmandas C. Bhatia" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-bepl-text-main/80 via-transparent to-transparent opacity-90 z-10 pointer-events-none"></div>
+                            <figcaption class="absolute bottom-6 left-6 right-6 text-left z-10">
+                                <h3 class="text-2xl md:text-3xl font-serif text-[#F7F2E8] mb-1">Late Shri Laxmandas C. Bhatia</h3>
+                                <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold">The Founder</span>
+                            </figcaption>
+                        </figure>
+                        <p class="text-sm font-medium text-bepl-text-main leading-relaxed">
+                            Our story begins with a visionary. In 1973, Late Shri Laxmandas C. Bhatia recognized the untapped potential of India's human capital. With unwavering dedication, he established a professional conduit for overseas recruitment, laying the foundation for a global enterprise. Guided by the blessings of our Guru, Shri Sathya Sai Baba of Puttaparthi, his ethos of service and integrity continues to be our true north.
+                        </p>
+                    </article>
+
+                    <!-- M.L. Bhatia (Now matched to 4:3 Aspect Ratio) -->
+                    <article class="reveal flex flex-col items-center lg:items-start text-center lg:text-left w-full group" style="transition-delay: 0.2s;">
+                        <figure class="sheen-container w-full aspect-[4/3] mb-8 border border-bepl-blue/10 shadow-sm relative">
+                            <img src="ml-bhatia-portrait.jpg" alt="Portrait of Mr. M. L. Bhatia" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-bepl-text-main/80 via-transparent to-transparent opacity-90 z-10 pointer-events-none"></div>
+                            <figcaption class="absolute bottom-6 left-6 right-6 text-left z-10">
+                                <h3 class="text-2xl md:text-3xl font-serif text-[#F7F2E8] mb-1">Mr. M. L. Bhatia</h3>
+                                <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold">Director</span>
+                            </figcaption>
+                        </figure>
+                        <p class="text-sm font-medium text-bepl-text-main leading-relaxed">
+                            Carrying the mantle forward, Mr. M. L. Bhatia brings over 35 years of unparalleled expertise in manpower consultancy. His strategic acumen has driven the timely, high-stakes deployment of elite recruits across diverse verticals—from Oil & Gas and Aviation to Healthcare and Civil Engineering. Under his leadership, our footprint has expanded robustly across the Middle East, South East Asia, Europe, and Africa.
+                        </p>
+                    </article>
+                </div>
+
+                <!-- Tier 2: Directorate -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 max-w-[1000px] mx-auto border-t border-bepl-blue/10 pt-20">
+                    <!-- Pradip Sunderji -->
+                    <article class="reveal flex flex-col sm:flex-row items-center sm:items-start gap-6 group">
+                        <figure class="w-36 h-36 shrink-0 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm">
+                            <img src="director-3-portrait.jpg" alt="Portrait of Mr. Pradip Sunderji" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
+                        </figure>
+                        <div class="flex flex-col items-center sm:items-start text-center sm:text-left w-full">
+                            <h4 class="text-xl font-serif text-bepl-text-main mb-1">Mr. Pradip Sunderji</h4>
+                            <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold mb-3">Sr. Executive (Overseas Ops)</span>
+                            <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Spearheading our international logistics with tactical precision, ensuring that cross-border talent integration is executed flawlessly and aligns perfectly with dynamic global market demands.</p>
+                        </div>
+                    </article>
+
+                    <!-- Jawahar Bhatia -->
+                    <article class="reveal flex flex-col sm:flex-row items-center sm:items-start gap-6 group" style="transition-delay: 0.1s;">
+                        <figure class="w-36 h-36 shrink-0 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm">
+                            <img src="director-4-portrait.jpeg" alt="Portrait of Mr. Jawahar Bhatia" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
+                        </figure>
+                        <div class="flex flex-col items-center sm:items-start text-center sm:text-left w-full">
+                            <h4 class="text-xl font-serif text-bepl-text-main mb-1">Mr. Jawahar Bhatia</h4>
+                            <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold mb-3">Sr. Executive (Overseas Ops)</span>
+                            <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Driving operational excellence and maintaining rigorous compliance protocols, guaranteeing that every placement meets and exceeds our elite global standards without compromise.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- IN-HOUSE INFRASTRUCTURE (Vertical Aspect Ratios) -->
+        <section class="w-full bg-bepl-dark py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10 overflow-hidden">
+            <div class="max-w-[1500px] mx-auto w-full">
+                <div class="text-center mb-20 reveal">
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Our Ecosystem</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Integrated Infrastructure.</h2>
+                </div>
+
+                <!-- Medical Clinic -->
+                <article class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 mb-24 reveal">
+                    <figure class="w-full lg:w-1/2 relative">
+                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 translate-x-4 translate-y-4 pointer-events-none"></div>
+                        <div class="border border-bepl-blue/10 shadow-md h-[500px] lg:h-[700px] overflow-hidden">
+                            <img src="medical-clinic-stock.png" alt="Modern Medical Testing Facility at Dr. Bhatia's Clinic" loading="lazy" decoding="async" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </figure>
+                    <div class="w-full lg:w-1/2 flex flex-col">
+                        <span class="text-xs font-bold text-bepl-gold tracking-widest uppercase mb-3 border-l-2 border-bepl-gold pl-3">Medical Centre</span>
+                        <h3 class="text-3xl font-serif text-bepl-text-main mb-6">Dr. Bhatia's Clinic</h3>
+                        <p class="text-base font-medium text-bepl-text-main leading-relaxed mb-6">
+                            Uncompromising health and compliance. Our in-house medical facility, spearheaded by G.C.C certified Dr. H.S. Bhatia, streamlines the deployment lifecycle. We conduct rigorous, full-spectrum medical assessments to guarantee the highest standards of occupational readiness for our clients worldwide.
+                        </p>
+                        <div class="bg-bepl-card border border-bepl-blue/10 p-4 w-max shadow-sm">
+                            <span class="text-xs uppercase tracking-widest text-bepl-text-main font-bold">GAMCA / G.C.C. Recognised</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Travel Division -->
+                <article class="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20 reveal">
+                    <figure class="w-full lg:w-1/2 relative">
+                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 -translate-x-4 translate-y-4 pointer-events-none"></div>
+                        <div class="border border-bepl-blue/10 shadow-md h-[500px] lg:h-[700px] overflow-hidden">
+                            <img src="aviation-travel-stock.jpg" alt="Global Aviation Logistics for Bhatia Travels" loading="lazy" decoding="async" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </figure>
+                    <div class="w-full lg:w-1/2 flex flex-col">
+                        <span class="text-xs font-bold text-bepl-gold tracking-widest uppercase mb-3 border-l-2 border-bepl-gold pl-3">Travel Division</span>
+                        <h3 class="text-3xl font-serif text-bepl-text-main mb-6">Bhatia Travels</h3>
+                        <p class="text-base font-medium text-bepl-text-main leading-relaxed mb-6">
+                            Logistics, perfected. Our IATA-recognized travel division completes the recruitment ecosystem, orchestrating hassle-free ticketing, local transport, and accommodation. We eliminate delays and latent issues, ensuring your workforce arrives on time, every time, ready to drive your projects forward.
+                        </p>
+                        <div class="bg-bepl-card border border-bepl-blue/10 p-4 w-max shadow-sm">
+                            <span class="text-xs uppercase tracking-widest text-bepl-text-main font-bold">IATA Recognised</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- GEOGRAPHICAL FOOTPRINT -->
+        <section class="w-full bg-bepl-bg py-24 px-6 lg:px-10 border-t border-bepl-blue/10">
+            <div class="max-w-[1500px] mx-auto w-full flex flex-col md:flex-row justify-between items-center bg-bepl-card border border-bepl-blue/10 shadow-sm p-10 lg:p-16 reveal">
+                <div class="w-full md:w-1/3 mb-10 md:mb-0">
+                    <h3 class="text-3xl font-serif text-bepl-text-main mb-4">Strategic Sourcing</h3>
+                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed max-w-xs">Global reach, localized expertise. We actively source elite manpower from prime geographical hubs, curating a highly adaptable talent pool.</p>
+                </div>
+                
+                <div class="w-full md:w-2/3 flex flex-wrap justify-center md:justify-end gap-6 md:gap-12">
+                    <div class="text-center group">
+                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">India</span>
+                        <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
+                    </div>
+                    <div class="text-center group">
+                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Nepal</span>
+                        <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
+                    </div>
+                    <div class="text-center group">
+                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Bangladesh</span>
+                        <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
+                    </div>
+                    <div class="text-center group">
+                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Sri Lanka</span>
+                        <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE PHILOSOPHY -->
+        <section class="w-full bg-bepl-bg py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10">
+            <div class="max-w-[1500px] mx-auto w-full">
+                <div class="text-center mb-16 lg:mb-24 reveal">
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Our Ethos</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Vision & Mission.</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Vision -->
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <h4 class="text-lg font-serif text-bepl-text-main mb-3">Our Vision</h4>
+                        <p class="text-sm font-medium text-bepl-text-main leading-relaxed">To stand as the undisputed global benchmark in human resource provisioning and workforce excellence.</p>
+                    </article>
+                    
+                    <!-- Clients -->
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.1s;">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <h4 class="text-lg font-serif text-bepl-text-main mb-3">Clients</h4>
+                        <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Forging enduring partnerships by delivering superior, bespoke workforce solutions that consistently drive your business success.</p>
+                    </article>
+
+                    <!-- Employees -->
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.2s;">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <h4 class="text-lg font-serif text-bepl-text-main mb-3">Employees</h4>
+                        <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Cultivating a dynamic, seamless organization that champions innovation, incubates raw talent, and rewards excellence.</p>
+                    </article>
+
+                    <!-- Associates & Community -->
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.3s;">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h4 class="text-lg font-serif text-bepl-text-main mb-3">Associates & Community</h4>
+                        <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Nurturing symbiotic relationships with our service partners while actively propelling the economic growth of our nation.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-bepl-dark border-t border-bepl-gold/20 relative overflow-hidden z-50">
+        
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[1px] bg-gradient-to-r from-transparent via-bepl-gold/50 to-transparent shadow-[0_0_30px_rgba(183,146,78,0.2)]"></div>
+
+        <div class="max-w-[1200px] mx-auto w-full px-6 lg:px-10 pt-20 pb-8 relative z-10">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-20">
+                
+                <div class="md:col-span-5 flex flex-col items-start">
+                    <a href="index.html" aria-label="Bhatia Employment Pvt Ltd Home" class="mb-4 inline-block border-none outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">
+                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd Logo" loading="lazy" decoding="async" class="h-12 lg:h-16 w-auto object-contain transform scale-[1.1] lg:scale-[1.2] origin-left">
+                    </a>
+                    
+                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed mb-8 max-w-md">
+                        We don't just fill seats; we engineer global workforces. Delivering elite, zero-risk talent acquisition with absolute logistical precision.
+                    </p>
+                    
+                    <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-4 inline-block">
+                        <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold block mb-1">Govt. of India Approved</span>
+                        <span class="text-sm font-medium text-bepl-text-main font-mono tracking-wider">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3 lg:col-span-3 md:pl-8 lg:pl-12">
+                    <h4 class="text-lg font-serif text-bepl-text-main mb-6">Navigation</h4>
+                    <ul class="flex flex-col space-y-4">
+                        <li><a href="index.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Home</a></li>
+                        <li><a href="about.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">About Us</a></li>
+                        <li><a href="services.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Services</a></li>
+                        <li><a href="underconstruction.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Current Vacancies</a></li>
+                        <li><a href="underconstruction.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Our Clients</a></li>
+                        <li><a href="contact.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-4 lg:col-span-4">
+                    <h4 class="text-lg font-serif text-bepl-text-main mb-6">Headquarters</h4>
+                    
+                    <address class="not-italic">
+                        <div class="flex items-start mb-6">
+                            <svg class="w-5 h-5 text-bepl-gold mt-0.5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span class="text-sm font-medium text-bepl-text-main leading-relaxed">
+                                Ballard Estate,<br>
+                                Mumbai, Maharashtra,<br>
+                                India
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col space-y-4 mb-8">
+                            <a href="mailto:info@bhatiaemployment.com" class="flex items-center text-sm font-medium text-bepl-text-main hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">
+                                <svg class="w-4 h-4 text-bepl-gold mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                info@bhatiaemployment.com
+                            </a>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-4 h-4 text-bepl-gold mr-3 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <div class="flex flex-col space-y-1.5">
+                                    <a href="tel:+919152498989" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">+91 91524 98989</a>
+                                    <a href="tel:+919152698989" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">+91 91 5269 898 9</a>
+                                </div>
+                            </div>
+                        </div>
+                    </address>
+
+                    <div class="flex items-center space-x-4">
+                        <a href="#" aria-label="LinkedIn" class="w-12 h-12 rounded-full border-2 border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-bepl-bg hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-12 h-12 rounded-full border-2 border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-bepl-bg hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="w-12 h-12 rounded-full border-2 border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-bepl-bg hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="w-12 h-12 rounded-full border-2 border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-bepl-bg hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-bepl-blue/10 pt-8 flex justify-center items-center">
+                <p class="text-sm font-medium text-bepl-text-main">
+                    &copy; 2026 Bhatia Employment Pvt Ltd. All rights reserved.
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { 
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } 
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            
+            // Observe both the standard reveals and the new sheen containers
+            document.querySelectorAll('.reveal, .sheen-container').forEach((el) => { observer.observe(el); });
+        });
+    </script>
+</body>
+</html>
