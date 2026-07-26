@@ -133,7 +133,7 @@
             content: ''; width: 3px; height: 4px;
             background: #B7924E; border-radius: 50%;
             position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
-            animation: scrollDown MouseScroll 1.5s infinite cubic-bezier(0.65, 0, 0.35, 1);
+            animation: MouseScroll 1.5s infinite cubic-bezier(0.65, 0, 0.35, 1);
         }
         @keyframes MouseScroll {
             0% { transform: translate(-50%, 0); opacity: 1; }
@@ -379,7 +379,7 @@
             </div>
         </section>
 
-        <!-- NEW: Autonomous Parallax Media Gallery -->
+        <!-- Autonomous Parallax Media Gallery -->
         <section id="execution-gallery" class="w-full bg-bepl-dark py-20 px-6 lg:px-10 border-t border-bepl-gold/10 relative overflow-hidden">
             <div class="max-w-[1200px] mx-auto w-full relative z-10 text-center mb-12">
                 <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block reveal-up">Real-World Execution</span>
@@ -559,6 +559,12 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="flex justify-center mt-10 reveal-up">
+                <button id="view-all-btn" class="border-[1.5px] border-bepl-gold text-bepl-gold px-10 py-3 font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-bepl-gold hover:text-[#F7F2E8] hover:shadow-[0_0_20px_rgba(183,146,78,0.4)] transition-all duration-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-bepl-gold">
+                    View All Media
+                </button>
+            </div>
         </section>
 
         <section class="w-full bg-bepl-bg pb-24 relative overflow-hidden">
@@ -636,6 +642,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- UNIFIED GRID VIEW OVERLAY -->
+    <div id="grid-view-overlay" class="fixed inset-0 z-[90] bg-[#1F2937] overflow-y-auto hidden opacity-0 transition-opacity duration-300">
+        <div class="min-h-screen px-6 py-20 lg:px-10 relative">
+            
+            <!-- Gold Back Button -->
+            <button id="grid-view-back" class="absolute top-6 left-6 md:top-10 md:left-10 flex items-center text-bepl-gold hover:text-[#e6c85e] hover:shadow-[0_0_15px_rgba(183,146,78,0.2)] transition-all duration-300 focus:outline-none group px-4 py-2 border border-bepl-gold/30 rounded-sm bg-bepl-gold/5">
+                <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span class="text-[11px] uppercase tracking-widest font-bold mt-0.5">Back</span>
+            </button>
+
+            <div class="max-w-[1200px] mx-auto mt-16 md:mt-8">
+                <h3 class="text-3xl font-serif text-[#F7F2E8] mb-12 text-center">Execution Gallery</h3>
+                
+                <!-- JS will inject all unique media here -->
+                <div id="grid-view-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- UNIFIED FULLSCREEN LIGHTBOX -->
     <div id="media-lightbox" class="fixed inset-0 z-[100] bg-[#1F2937]/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center">
@@ -721,36 +747,81 @@
             window.addEventListener('scroll', kineticScroll, { passive: true });
             kineticScroll();
 
-            // 3. THE LIGHTBOX ENGINE
+            // 3. THE LIGHTBOX & GRID VIEW ENGINE
             const mediaItems = document.querySelectorAll('.media-item');
             const lightbox = document.getElementById('media-lightbox');
             const lightboxContent = document.getElementById('lightbox-content');
             const closeBtn = document.getElementById('lightbox-close');
             const prevBtn = document.getElementById('lightbox-prev');
             const nextBtn = document.getElementById('lightbox-next');
+            
+            const gridViewOverlay = document.getElementById('grid-view-overlay');
+            const gridViewContainer = document.getElementById('grid-view-container');
+            const viewAllBtn = document.getElementById('view-all-btn');
+            const gridViewBackBtn = document.getElementById('grid-view-back');
+            
             let currentIndex = 0;
-            let uniqueMedia = []; // Store unique array to avoid duplicating items in the infinite loop
+            let uniqueMedia = []; 
 
             // Build unique array from the DOM elements
             mediaItems.forEach(item => {
                 const src = item.getAttribute('data-src');
                 const type = item.getAttribute('data-type');
                 
-                // Only push if it doesn't already exist
                 if(!uniqueMedia.find(m => m.src === src)) {
                     uniqueMedia.push({ src, type });
                 }
 
-                // Add click listener
+                // Add click listener to main page parallax items
                 item.addEventListener('click', () => {
                     currentIndex = uniqueMedia.findIndex(m => m.src === src);
                     openLightbox();
                 });
             });
 
+            // Populate the "View All" Grid dynamically
+            uniqueMedia.forEach((media, index) => {
+                const div = document.createElement('div');
+                div.className = 'relative rounded-sm overflow-hidden border border-bepl-gold/10 bg-black/20 aspect-square cursor-pointer group';
+                
+                if (media.type === 'video') {
+                    div.innerHTML = `
+                        <video src="${media.src}" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></video>
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <svg class="w-10 h-10 text-bepl-gold drop-shadow-[0_0_15px_rgba(183,146,78,0.8)] opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    `;
+                } else {
+                    div.innerHTML = `<img src="${media.src}" alt="Gallery Item" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">`;
+                }
+
+                // Clicking a grid item opens the lightbox
+                div.addEventListener('click', () => {
+                    currentIndex = index;
+                    openLightbox();
+                });
+
+                gridViewContainer.appendChild(div);
+            });
+
+            // View All Grid Toggle Logic
+            viewAllBtn.addEventListener('click', () => {
+                gridViewOverlay.classList.remove('hidden');
+                setTimeout(() => gridViewOverlay.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden'; 
+            });
+
+            gridViewBackBtn.addEventListener('click', () => {
+                gridViewOverlay.classList.add('opacity-0');
+                setTimeout(() => gridViewOverlay.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+            });
+
+            // Lightbox Overlay Logic
             function openLightbox() {
                 lightbox.classList.remove('hidden');
                 setTimeout(() => lightbox.classList.remove('opacity-0'), 10);
+                // Ensure body is locked (in case opened directly from main page)
                 document.body.style.overflow = 'hidden'; 
                 renderMedia();
             }
@@ -759,14 +830,18 @@
                 lightbox.classList.add('opacity-0');
                 setTimeout(() => {
                     lightbox.classList.add('hidden');
-                    lightboxContent.innerHTML = ''; // Clear memory of running videos
+                    lightboxContent.innerHTML = ''; 
                 }, 300);
-                document.body.style.overflow = '';
+                
+                // Only restore page scrolling if the Grid View is ALSO closed
+                if (gridViewOverlay.classList.contains('hidden')) {
+                    document.body.style.overflow = '';
+                }
             }
 
             function renderMedia() {
                 const media = uniqueMedia[currentIndex];
-                lightboxContent.innerHTML = ''; // Clear current
+                lightboxContent.innerHTML = ''; 
                 
                 if (media.type === 'video') {
                     lightboxContent.innerHTML = `<video src="${media.src}" controls autoplay class="max-h-[85vh] max-w-full rounded-sm shadow-[0_0_40px_rgba(0,0,0,0.5)]"></video>`;
@@ -789,17 +864,19 @@
             nextBtn.addEventListener('click', nextMedia);
             prevBtn.addEventListener('click', prevMedia);
             
-            // Close on background click
             lightbox.addEventListener('click', (e) => {
                 if(e.target === lightbox) closeLightbox();
             });
 
-            // Keyboard support
             document.addEventListener('keydown', (e) => {
-                if(lightbox.classList.contains('hidden')) return;
-                if(e.key === 'Escape') closeLightbox();
-                if(e.key === 'ArrowRight') nextMedia();
-                if(e.key === 'ArrowLeft') prevMedia();
+                if(!lightbox.classList.contains('hidden')) {
+                    if(e.key === 'Escape') closeLightbox();
+                    if(e.key === 'ArrowRight') nextMedia();
+                    if(e.key === 'ArrowLeft') prevMedia();
+                } else if (!gridViewOverlay.classList.contains('hidden')) {
+                    // Close Grid View if escape is pressed while Lightbox is closed
+                    if(e.key === 'Escape') gridViewBackBtn.click();
+                }
             });
 
         });
