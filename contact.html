@@ -7,6 +7,9 @@
     <title>Contact Us | Bhatia Employment Pvt Ltd</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -315,9 +318,9 @@
                                 </div>
 
                                 <div class="group border border-dashed border-bepl-blue/20 hover:border-bepl-gold/50 bg-white p-6 text-center cursor-pointer transition-colors duration-300 rounded-sm relative mt-2 shadow-sm focus-within:ring-2 focus-within:ring-bepl-gold">
-                                    <input type="file" id="resume_upload" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" required />
+                                    <input type="file" id="resume_upload" accept=".pdf,.doc,.docx" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" required />
                                     <svg class="w-8 h-8 text-bepl-text-muted group-hover:text-bepl-gold transition-colors duration-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                    <span class="block text-xs text-bepl-text-body group-hover:text-bepl-text-main transition-colors">Drag and drop your CV or <span class="text-bepl-gold underline font-normal">Browse files</span></span>
+                                    <span id="resume_label_text" class="block text-xs text-bepl-text-body group-hover:text-bepl-text-main transition-colors">Drag and drop your CV or <span class="text-bepl-gold underline font-normal">Browse files</span></span>
                                     <span class="block text-[9px] uppercase tracking-widest text-bepl-text-muted mt-1">PDF, DOCX up to 10MB</span>
                                 </div>
 
@@ -444,6 +447,13 @@
     </footer>
 
     <script>
+        // ==========================================
+        // PASTE YOUR TWO SUPABASE KEYS BELOW:
+        // ==========================================
+        const SUPABASE_URL = 'https://mdchsrutunnbjdmoxjch.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kY2hzcnV0dW5uYmpkbW94amNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyMTc1MzMsImV4cCI6MjEwODc5MzUzM30.8glBlQqax_63Z-JSwvYhsLOsxoQvJaGzz-akFyeQiwk';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // UI Switching Logic
         function switchUI(targetId) {
             const layers = ['ui-menu', 'ui-client', 'ui-candidate'];
@@ -579,6 +589,21 @@
             initDropdown('client');
             initDropdown('cand');
 
+            // Show Selected CV Filename
+            const resumeInput = document.getElementById('resume_upload');
+            const resumeLabelText = document.getElementById('resume_label_text');
+            const defaultResumeLabelHTML = resumeLabelText ? resumeLabelText.innerHTML : '';
+
+            if (resumeInput && resumeLabelText) {
+                resumeInput.addEventListener('change', () => {
+                    if (resumeInput.files && resumeInput.files[0]) {
+                        resumeLabelText.innerHTML = `<span class="text-bepl-gold font-semibold">Selected: ${resumeInput.files[0].name}</span>`;
+                    } else {
+                        resumeLabelText.innerHTML = defaultResumeLabelHTML;
+                    }
+                });
+            }
+
             // Auto-resize Textarea Engine
             const textareas = document.querySelectorAll('textarea');
             textareas.forEach(tx => {
@@ -588,50 +613,149 @@
                 }, false);
             });
 
-            // Form Handlers
-            const handleForm = (formId, btnId, feedbackId, successMsg) => {
-                const form = document.getElementById(formId);
-                const btn = document.getElementById(btnId);
-                const feedback = document.getElementById(feedbackId);
+            // 1. Corporate Inquiry Form Handler (Supabase)
+            const clientForm = document.getElementById('clientForm');
+            const clientBtn = document.getElementById('clientSubmitBtn');
+            const clientFeedback = document.getElementById('clientFeedback');
 
-                if (!form || !btn || !feedback) return;
-
-                form.addEventListener('submit', (e) => {
+            if (clientForm) {
+                clientForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    if (!form.checkValidity()) { form.reportValidity(); return; }
-                    
-                    const originalText = btn.innerText;
-                    btn.innerText = 'Processing...';
-                    btn.disabled = true;
+                    if (!clientForm.checkValidity()) { clientForm.reportValidity(); return; }
 
-                    setTimeout(() => {
-                        btn.innerText = 'Success';
-                        btn.classList.replace('bg-bepl-gold', 'bg-green-600');
-                        btn.classList.add('text-white');
-                        feedback.innerText = successMsg;
-                        feedback.classList.remove('opacity-0');
+                    const originalText = clientBtn.innerText;
+                    clientBtn.innerText = 'Processing...';
+                    clientBtn.disabled = true;
+                    clientFeedback.classList.add('opacity-0');
+
+                    try {
+                        const { error } = await supabaseClient
+                            .from('corporate_inquiries')
+                            .insert([{
+                                company_name: document.getElementById('comp_name').value.trim(),
+                                contact_person: document.getElementById('client_contact').value.trim(),
+                                corporate_email: document.getElementById('client_email').value.trim(),
+                                country_code: document.getElementById('clientCountryCodeInput').value,
+                                phone_number: document.getElementById('client_phone').value.trim(),
+                                industry_sector: document.getElementById('client_sector').value.trim(),
+                                additional_notes: document.getElementById('client_message').value.trim()
+                            }]);
+
+                        if (error) throw error;
+
+                        clientBtn.innerText = 'Success';
+                        clientBtn.classList.replace('bg-bepl-gold', 'bg-green-600');
+                        clientFeedback.innerText = 'Corporate profile updated. We will be in touch shortly.';
+                        clientFeedback.classList.remove('opacity-0');
 
                         setTimeout(() => {
-                            form.reset();
-                            const textareas = form.querySelectorAll('textarea');
-                            textareas.forEach(t => t.style.height = 'auto');
-                            
-                            btn.innerText = originalText;
-                            btn.disabled = false;
-                            btn.classList.replace('bg-green-600', 'bg-bepl-gold');
-                            btn.classList.remove('text-white');
-                            feedback.classList.add('opacity-0');
-                            
-                            // Return to menu automatically
+                            clientForm.reset();
+                            document.getElementById('clientSelectedDisplay').innerText = '🇮🇳 (+91)';
+                            document.getElementById('clientCountryCodeInput').value = '+91';
+                            clientForm.querySelectorAll('textarea').forEach(t => t.style.height = 'auto');
+
+                            clientBtn.innerText = originalText;
+                            clientBtn.disabled = false;
+                            clientBtn.classList.replace('bg-green-600', 'bg-bepl-gold');
+                            clientFeedback.classList.add('opacity-0');
+
                             setTimeout(() => { switchUI('ui-menu'); }, 500);
+                        }, 3000);
 
-                        }, 3500);
-                    }, 1000);
+                    } catch (err) {
+                        console.error('Supabase Corporate Form Error:', err);
+                        clientBtn.innerText = originalText;
+                        clientBtn.disabled = false;
+                        clientFeedback.innerText = 'Submission failed. Please check your connection and try again.';
+                        clientFeedback.classList.remove('opacity-0');
+                    }
                 });
-            };
+            }
 
-            handleForm('clientForm', 'clientSubmitBtn', 'clientFeedback', 'Corporate profile updated. We will be in touch shortly.');
-            handleForm('candidateForm', 'candSubmitBtn', 'candFeedback', 'Credentials successfully added to the global pipeline.');
+            // 2. Candidate CV Form Handler (Supabase Storage + Database)
+            const candidateForm = document.getElementById('candidateForm');
+            const candBtn = document.getElementById('candSubmitBtn');
+            const candFeedback = document.getElementById('candFeedback');
+
+            if (candidateForm) {
+                candidateForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!candidateForm.checkValidity()) { candidateForm.reportValidity(); return; }
+
+                    const file = resumeInput.files[0];
+                    if (!file) return;
+
+                    if (file.size > 10 * 1024 * 1024) {
+                        candFeedback.innerText = 'File exceeds 10MB limit. Please upload a smaller file.';
+                        candFeedback.classList.remove('opacity-0');
+                        return;
+                    }
+
+                    const originalText = candBtn.innerText;
+                    candBtn.innerText = 'Uploading CV...';
+                    candBtn.disabled = true;
+                    candFeedback.classList.add('opacity-0');
+
+                    try {
+                        // Create a unique filename and upload to Supabase Storage 'resumes' bucket
+                        const cleanFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+                        const uniqueFilePath = `${Date.now()}_${cleanFileName}`;
+
+                        const { error: uploadError } = await supabaseClient
+                            .storage
+                            .from('resumes')
+                            .upload(uniqueFilePath, file);
+
+                        if (uploadError) throw uploadError;
+
+                        // Get clickable link to the uploaded CV
+                        const { data: urlData } = supabaseClient
+                            .storage
+                            .from('resumes')
+                            .getPublicUrl(uniqueFilePath);
+
+                        // Save candidate details + CV link to table
+                        const { error: insertError } = await supabaseClient
+                            .from('candidate_submissions')
+                            .insert([{
+                                full_name: document.getElementById('cand_name').value.trim(),
+                                personal_email: document.getElementById('cand_email').value.trim(),
+                                country_code: document.getElementById('candCountryCodeInput').value,
+                                phone_number: document.getElementById('cand_phone').value.trim(),
+                                industry_profession: document.getElementById('cand_industry').value.trim(),
+                                resume_url: urlData.publicUrl
+                            }]);
+
+                        if (insertError) throw insertError;
+
+                        candBtn.innerText = 'Success';
+                        candBtn.classList.replace('bg-bepl-gold', 'bg-green-600');
+                        candFeedback.innerText = 'Credentials successfully added to the global pipeline.';
+                        candFeedback.classList.remove('opacity-0');
+
+                        setTimeout(() => {
+                            candidateForm.reset();
+                            resumeLabelText.innerHTML = defaultResumeLabelHTML;
+                            document.getElementById('candSelectedDisplay').innerText = '🇮🇳 (+91)';
+                            document.getElementById('candCountryCodeInput').value = '+91';
+
+                            candBtn.innerText = originalText;
+                            candBtn.disabled = false;
+                            candBtn.classList.replace('bg-green-600', 'bg-bepl-gold');
+                            candFeedback.classList.add('opacity-0');
+
+                            setTimeout(() => { switchUI('ui-menu'); }, 500);
+                        }, 3000);
+
+                    } catch (err) {
+                        console.error('Supabase Candidate Form Error:', err);
+                        candBtn.innerText = originalText;
+                        candBtn.disabled = false;
+                        candFeedback.innerText = 'Upload failed. Please try again.';
+                        candFeedback.classList.remove('opacity-0');
+                    }
+                });
+            }
         });
     </script>
 </body>
