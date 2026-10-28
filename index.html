@@ -61,6 +61,25 @@
         }
 
         #globe-container { position: relative; overflow: hidden; }
+
+        /* Mobile Menu Overlay Animations */
+        #mobile-menu {
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.menu-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #mobile-menu .mobile-nav-item {
+            transform: translateY(16px);
+            opacity: 0;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.menu-open .mobile-nav-item {
+            transform: translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -68,24 +87,25 @@
 
     <div class="min-h-[100dvh] flex flex-col w-full relative">
         
-        <header class="bg-bepl-dark px-6 lg:px-10 py-3 lg:py-4 border-b border-bepl-blue/10 w-full shrink-0 z-50">
+        <header class="bg-bepl-dark px-5 sm:px-6 lg:px-10 py-3 lg:py-4 border-b border-bepl-blue/10 w-full shrink-0 z-50 relative">
             <div class="max-w-[1500px] mx-auto flex justify-between items-center w-full">
                 
                 <!-- Logo & Brand Lockup -->
                 <div class="flex items-center shrink-0">
                     <a href="index.html" class="flex items-center border-none outline-none relative z-10">
-                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd" class="h-10 lg:h-12 w-auto object-contain transform scale-[1.2] lg:scale-[1.3] origin-left">
+                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd" class="h-9 sm:h-10 lg:h-12 w-auto object-contain transform scale-[1.15] sm:scale-[1.2] lg:scale-[1.3] origin-left">
                     </a>
                     
-                    <!-- BEBTA Divider and Text (Optically aligned) -->
-                    <div class="hidden sm:flex items-center ml-10 lg:ml-14 mt-1 lg:mt-1.5">
-                        <div class="h-6 lg:h-7 w-[1px] bg-bepl-gold/60 mr-4 lg:mr-5"></div>
-                        <span class="text-bepl-gold font-serif font-normal text-[15px] lg:text-[17px] uppercase tracking-[0.2em] cursor-default leading-none">
+                    <!-- BEBTA Divider and Text (Visible on mobile, restored to exact desktop sizing at sm/lg) -->
+                    <div class="flex items-center ml-6 sm:ml-10 lg:ml-14 mt-0.5 sm:mt-1 lg:mt-1.5">
+                        <div class="h-5 sm:h-6 lg:h-7 w-[1px] bg-bepl-gold/60 mr-3 sm:mr-4 lg:mr-5"></div>
+                        <span class="text-bepl-gold font-serif font-normal text-[13px] sm:text-[15px] lg:text-[17px] uppercase tracking-[0.18em] sm:tracking-[0.2em] cursor-default leading-none">
                             BEBTA
                         </span>
                     </div>
                 </div>
                 
+                <!-- Desktop Navigation (Untouched) -->
                 <nav aria-label="Main Navigation" class="hidden lg:block">
                     <ul class="flex space-x-6 xl:space-x-10 text-xs font-bold uppercase tracking-[0.15em] text-bepl-text-main items-center">
                         <li><a href="index.html" class="text-bepl-gold font-bold border-b-2 border-bepl-gold pb-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">HOME</a></li>
@@ -101,18 +121,72 @@
                         </li>
                     </ul>
                 </nav>
+
+                <!-- Mobile Hamburger Button (Hidden on lg+) -->
+                <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" aria-expanded="false" class="lg:hidden flex flex-col justify-center items-end w-10 h-10 p-1.5 text-bepl-text-main focus:outline-none z-50">
+                    <span id="burger-line-1" class="block w-6 h-[1.5px] bg-bepl-gold transition-all duration-300 origin-center"></span>
+                    <span id="burger-line-2" class="block w-4 h-[1.5px] bg-bepl-text-main mt-1.5 transition-all duration-300 origin-center"></span>
+                </button>
             </div>
         </header>
 
-        <main class="flex-1 flex items-center justify-center w-full px-6 lg:px-10 py-6 lg:py-0">
+        <!-- Full-Screen Editorial Mobile Navigation Drawer (Hidden on lg+) -->
+        <div id="mobile-menu" class="fixed inset-0 bg-bepl-dark z-40 lg:hidden flex flex-col justify-between px-6 pt-24 pb-8 opacity-0 invisible pointer-events-none overflow-y-auto">
+            <nav aria-label="Mobile Navigation" class="my-auto">
+                <ul class="flex flex-col space-y-5">
+                    <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.05s;">
+                        <a href="index.html" class="flex items-center justify-between text-2xl font-serif text-bepl-gold font-semibold">
+                            <span>Home</span>
+                            <span class="text-xs font-sans tracking-widest uppercase text-bepl-gold/70">01</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.1s;">
+                        <a href="aboutus.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                            <span>About Us</span>
+                            <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">02</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.15s;">
+                        <a href="services.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                            <span>Services</span>
+                            <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">03</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.2s;">
+                        <a href="currentvacancies.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                            <span>Current Vacancies</span>
+                            <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">04</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.25s;">
+                        <a href="ourclients.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                            <span>Our Clients</span>
+                            <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">05</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="mobile-nav-item pt-6 flex flex-col space-y-4" style="transition-delay: 0.3s;">
+                <a href="contact.html" class="w-full bg-bepl-blue text-[#F7F2E8] py-4 rounded-sm text-center text-xs font-bold uppercase tracking-[0.2em] shadow-sm active:scale-[0.99] transition-transform">
+                    Contact Us →
+                </a>
+                <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-3 text-center">
+                    <span class="text-[9px] uppercase tracking-widest text-bepl-gold font-bold block mb-0.5">Govt. of India Approved</span>
+                    <span class="text-[11px] text-bepl-text-body font-mono tracking-wider block">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
+                </div>
+            </div>
+        </div>
+
+        <main class="flex-1 flex items-center justify-center w-full px-5 sm:px-6 lg:px-10 pt-6 pb-2 lg:py-0">
             <div class="max-w-[1500px] mx-auto w-full flex flex-col lg:flex-row items-center justify-between">
                 
                 <div class="w-full lg:w-[55%] lg:pr-10 z-10 flex flex-col justify-center hero-fade-in" style="animation-delay: 0.1s;">
-                    <h1 class="font-serif font-bold leading-[1.05] mb-3">
-                        <span class="block text-bepl-gold whitespace-nowrap" style="font-size: clamp(2.2rem, 3.8vw, 4.5rem);">
+                    <h1 class="font-serif font-bold leading-[1.08] lg:leading-[1.05] mb-3">
+                        <span class="block text-bepl-gold lg:whitespace-nowrap text-[2rem] sm:text-[2.5rem] lg:text-[clamp(2.2rem,3.8vw,4.5rem)]">
                             Bhatia Employment Pvt Ltd
                         </span>
-                        <span class="block text-bepl-gold/90 mt-1" style="font-size: clamp(2.5rem, 4.5vw, 5.5rem);">
+                        <span class="block text-bepl-gold/90 mt-1 text-[2.1rem] sm:text-[2.75rem] lg:text-[clamp(2.5rem,4.5vw,5.5rem)]">
                             (BEBTA)
                         </span>
                     </h1>
@@ -122,161 +196,163 @@
                         <div class="h-[1px] w-12 bg-bepl-gold/50 ml-3"></div>
                     </div>
 
-                    <p class="text-lg lg:text-xl font-serif italic text-bepl-text-muted max-w-[90%]">
+                    <p class="text-base sm:text-lg lg:text-xl font-serif italic text-bepl-text-muted max-w-full lg:max-w-[90%]">
                         Connecting top talent with industry leaders since 1973
                     </p>
                 </div>
 
-                <div id="globe-container" class="w-full lg:w-[45%] h-[400px] sm:h-[500px] lg:h-[60vh] flex items-center justify-center mt-8 lg:mt-0 hero-fade-in" style="animation-delay: 0.3s;" aria-hidden="true"></div>
+                <!-- Globe Container: pointer-events-none on mobile prevents touch-scroll hijacking; restored on lg -->
+                <div id="globe-container" class="w-full lg:w-[45%] h-[270px] sm:h-[380px] lg:h-[60vh] flex items-center justify-center mt-2 sm:mt-6 lg:mt-0 pointer-events-none lg:pointer-events-auto hero-fade-in" style="animation-delay: 0.3s;" aria-hidden="true"></div>
             </div>
         </main>
 
-        <div class="bg-bepl-dark border-t border-bepl-blue/10 py-5 lg:py-6 w-full shrink-0 z-40 reveal">
-            <div class="max-w-[1500px] mx-auto px-6 lg:px-10 flex flex-wrap md:flex-nowrap justify-between items-center w-full divide-y md:divide-y-0 md:divide-x divide-bepl-blue/10 gap-y-6 md:gap-y-0">
-                <div class="w-1/2 md:flex-1 flex flex-col items-center justify-center text-center">
-                    <span class="text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="50000">0</span>+</span>
-                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.2em] mt-3">Candidates</span>
+        <!-- Stats Counter Ribbon: Symmetrical 2x2 Architectural Hairline Grid on mobile, original divide-x ribbon on md/lg -->
+        <div class="bg-bepl-dark border-t border-bepl-blue/10 py-0 md:py-5 lg:py-6 w-full shrink-0 z-30 reveal">
+            <div class="max-w-[1500px] mx-auto px-0 md:px-6 lg:px-10 grid grid-cols-2 md:flex md:flex-nowrap justify-between items-center w-full md:divide-y-0 md:divide-x divide-bepl-blue/10">
+                <div class="w-full md:w-1/2 md:flex-1 flex flex-col items-center justify-center text-center py-5 px-3 md:p-0 border-b border-r border-bepl-blue/10 md:border-none">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="50000">0</span>+</span>
+                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.18em] md:tracking-[0.2em] mt-2.5 md:mt-3">Candidates</span>
                 </div>
-                <div class="w-1/2 md:flex-1 flex flex-col items-center justify-center text-center">
-                    <span class="text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="350">0</span>+</span>
-                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.2em] mt-3">Companies Served</span>
+                <div class="w-full md:w-1/2 md:flex-1 flex flex-col items-center justify-center text-center py-5 px-3 md:p-0 border-b border-bepl-blue/10 md:border-none">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="350">0</span>+</span>
+                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.18em] md:tracking-[0.2em] mt-2.5 md:mt-3">Companies Served</span>
                 </div>
-                <div class="w-1/2 md:flex-1 flex flex-col items-center justify-center text-center pt-5 md:pt-0">
-                    <span class="text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="25">0</span>+</span>
-                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.2em] mt-3">Countries Covered</span>
+                <div class="w-full md:w-1/2 md:flex-1 flex flex-col items-center justify-center text-center py-5 px-3 md:p-0 border-r border-bepl-blue/10 md:border-none">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="25">0</span>+</span>
+                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.18em] md:tracking-[0.2em] mt-2.5 md:mt-3">Countries Covered</span>
                 </div>
-                <div class="w-1/2 md:flex-1 flex flex-col items-center justify-center text-center pt-5 md:pt-0">
-                    <span class="text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="53">0</span>+</span>
-                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.2em] mt-3">Years In Business</span>
+                <div class="w-full md:w-1/2 md:flex-1 flex flex-col items-center justify-center text-center py-5 px-3 md:p-0">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-sans text-bepl-text-main leading-none tracking-tight"><span class="counter" data-target="53">0</span>+</span>
+                    <span class="text-[9px] xl:text-[10px] font-bold text-bepl-gold uppercase tracking-[0.18em] md:tracking-[0.2em] mt-2.5 md:mt-3">Years In Business</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <section id="solutions" class="w-full bg-bepl-bg py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10">
+    <section id="solutions" class="w-full bg-bepl-bg py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10 border-t border-bepl-blue/10">
         <div class="max-w-[1500px] mx-auto w-full">
-            <div class="text-center mb-16 lg:mb-24 reveal">
-                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Strategic Alignment</span>
-                <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Targeted Solutions.</h2>
+            <div class="text-center mb-12 sm:mb-16 lg:mb-24 reveal">
+                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Strategic Alignment</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main">Targeted Solutions.</h2>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                <div class="reveal group border border-bepl-blue/10 bg-bepl-card p-10 lg:p-12 hover:border-bepl-gold/50 transition-all duration-500 flex flex-col justify-between" style="transition-delay: 0.1s;">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+                <div class="reveal group border border-bepl-blue/10 bg-bepl-card p-7 sm:p-10 lg:p-12 hover:border-bepl-gold/50 transition-all duration-500 flex flex-col justify-between" style="transition-delay: 0.1s;">
                     <div>
-                        <svg class="w-10 h-10 text-bepl-gold mb-8 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        <h3 class="text-2xl font-serif text-bepl-text-main mb-4">For Employers</h3>
-                        <p class="text-sm text-bepl-text-main font-medium leading-relaxed mb-8">Acquiring top-tier talent isn't just about filling vacancies; it's about engineering your company's future. We leverage decades of global industry insight to deliver precision-matched professionals who drive organizational growth.</p>
+                        <svg class="w-9 h-9 sm:w-10 sm:h-10 text-bepl-gold mb-6 sm:mb-8 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <h3 class="text-2xl font-serif text-bepl-text-main mb-3 sm:mb-4">For Employers</h3>
+                        <p class="text-sm text-bepl-text-main font-medium leading-relaxed mb-6 sm:mb-8">Acquiring top-tier talent isn't just about filling vacancies; it's about engineering your company's future. We leverage decades of global industry insight to deliver precision-matched professionals who drive organizational growth.</p>
                     </div>
-                    <a href="services.html" class="inline-flex items-center text-[11px] font-bold uppercase tracking-widest text-bepl-text-main group-hover:text-bepl-gold transition-colors w-max">Partner With Us <span class="ml-2">→</span></a>
+                    <a href="services.html" class="inline-flex items-center py-1 lg:py-0 text-[11px] font-bold uppercase tracking-widest text-bepl-text-main group-hover:text-bepl-gold transition-colors w-max">Partner With Us <span class="ml-2">→</span></a>
                 </div>
 
-                <div class="reveal group border border-bepl-blue/10 bg-bepl-card p-10 lg:p-12 hover:border-bepl-gold/50 transition-all duration-500 flex flex-col justify-between mt-0 lg:mt-12" style="transition-delay: 0.25s;">
+                <div class="reveal group border border-bepl-blue/10 bg-bepl-card p-7 sm:p-10 lg:p-12 hover:border-bepl-gold/50 transition-all duration-500 flex flex-col justify-between mt-0 lg:mt-12" style="transition-delay: 0.25s;">
                     <div>
-                        <svg class="w-10 h-10 text-bepl-gold mb-8 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        <h3 class="text-2xl font-serif text-bepl-text-main mb-4">For Professionals</h3>
-                        <p class="text-sm text-bepl-text-main font-medium leading-relaxed mb-8">Your career trajectory deserves more than algorithmic matching. We provide exclusive access to premier global organizations, offering bespoke guidance and market intelligence to position you in legacy roles.</p>
+                        <svg class="w-9 h-9 sm:w-10 sm:h-10 text-bepl-gold mb-6 sm:mb-8 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <h3 class="text-2xl font-serif text-bepl-text-main mb-3 sm:mb-4">For Professionals</h3>
+                        <p class="text-sm text-bepl-text-main font-medium leading-relaxed mb-6 sm:mb-8">Your career trajectory deserves more than algorithmic matching. We provide exclusive access to premier global organizations, offering bespoke guidance and market intelligence to position you in legacy roles.</p>
                     </div>
-                    <a href="currentvacancies.html" class="inline-flex items-center text-[11px] font-bold uppercase tracking-widest text-bepl-text-main group-hover:text-bepl-gold transition-colors w-max">Explore Opportunities <span class="ml-2">→</span></a>
+                    <a href="currentvacancies.html" class="inline-flex items-center py-1 lg:py-0 text-[11px] font-bold uppercase tracking-widest text-bepl-text-main group-hover:text-bepl-gold transition-colors w-max">Explore Opportunities <span class="ml-2">→</span></a>
                 </div>
 
-                <div class="reveal group border border-bepl-blue/10 bg-bepl-card p-10 lg:p-12 hover:border-bepl-gold/50 transition-all duration-500 flex flex-col justify-between mt-0 lg:mt-24" style="transition-delay: 0.4s;">
+                <div class="reveal group border border-bepl-blue/10 bg-bepl-card p-7 sm:p-10 lg:p-12 hover:border-bepl-gold/50 transition-all duration-500 flex flex-col justify-between mt-0 lg:mt-24" style="transition-delay: 0.4s;">
                     <div>
-                        <svg class="w-10 h-10 text-bepl-gold mb-8 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        <h3 class="text-2xl font-serif text-bepl-text-main mb-4">Core Infrastructure</h3>
-                        <p class="text-sm text-bepl-text-main font-medium leading-relaxed mb-8">From executive search to scalable workforce deployment, our comprehensive suite of human capital solutions is designed for pure agility across borders and highly specialized sectors.</p>
+                        <svg class="w-9 h-9 sm:w-10 sm:h-10 text-bepl-gold mb-6 sm:mb-8 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <h3 class="text-2xl font-serif text-bepl-text-main mb-3 sm:mb-4">Core Infrastructure</h3>
+                        <p class="text-sm text-bepl-text-main font-medium leading-relaxed mb-6 sm:mb-8">From executive search to scalable workforce deployment, our comprehensive suite of human capital solutions is designed for pure agility across borders and highly specialized sectors.</p>
                     </div>
-                    <a href="services.html" class="inline-flex items-center text-[11px] font-bold uppercase tracking-widest text-bepl-text-main group-hover:text-bepl-gold transition-colors w-max">View Services <span class="ml-2">→</span></a>
+                    <a href="services.html" class="inline-flex items-center py-1 lg:py-0 text-[11px] font-bold uppercase tracking-widest text-bepl-text-main group-hover:text-bepl-gold transition-colors w-max">View Services <span class="ml-2">→</span></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="verticals" class="w-full bg-bepl-bg py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10">
+    <section id="verticals" class="w-full bg-bepl-bg py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10 border-t border-bepl-blue/10">
         <div class="max-w-[1500px] mx-auto w-full">
-            <div class="flex flex-col lg:flex-row justify-between items-end mb-16 lg:mb-20 reveal">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 sm:mb-16 lg:mb-20 reveal">
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Industry Expertise</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Industry Verticals.</h2>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Industry Expertise</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main">Industry Verticals.</h2>
                 </div>
-                <p class="text-bepl-text-muted italic font-serif mt-6 lg:mt-0 max-w-sm text-right hidden lg:block">Deploying specialized, highly-vetted talent across 17 distinct global sectors.</p>
+                <p class="text-bepl-text-muted italic font-serif mt-3 lg:mt-0 text-sm sm:text-base max-w-sm lg:text-right block">Deploying specialized, highly-vetted talent across 17 distinct global sectors.</p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-bepl-blue/10 border border-bepl-blue/10 overflow-hidden">
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-orange-500/80 mb-6 group-hover:text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-orange-500 transition-colors">CONSTRUCTION</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-orange-500/80 mb-3.5 sm:mb-6 group-hover:text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-orange-500 transition-colors">CONSTRUCTION</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-cyan-500/80 mb-6 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-5.3c-.5 1.3-2 3.7-4 5.3S5 13 5 15a7 7 0 0 0 7 7z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-cyan-400 transition-colors">OIL & GAS</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-cyan-500/80 mb-3.5 sm:mb-6 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-5.3c-.5 1.3-2 3.7-4 5.3S5 13 5 15a7 7 0 0 0 7 7z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-cyan-400 transition-colors">OIL & GAS</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-blue-500/80 mb-6 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-blue-500 transition-colors">ENGINEERING</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-blue-500/80 mb-3.5 sm:mb-6 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-blue-500 transition-colors">ENGINEERING</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-emerald-500/80 mb-6 group-hover:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-emerald-400 transition-colors">HEALTH CARE</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500/80 mb-3.5 sm:mb-6 group-hover:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-emerald-400 transition-colors">HEALTH CARE</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-rose-500/80 mb-6 group-hover:text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-rose-500 transition-colors">HOSPITALITY</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-rose-500/80 mb-3.5 sm:mb-6 group-hover:text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-rose-500 transition-colors">HOSPITALITY</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-indigo-500/80 mb-6 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m4-10h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-indigo-400 transition-colors">MANUFACTURING</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-indigo-500/80 mb-3.5 sm:mb-6 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m4-10h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-indigo-400 transition-colors">MANUFACTURING</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-amber-500/80 mb-6 group-hover:text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-amber-500 transition-colors">TRANSPORTATION</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-amber-500/80 mb-3.5 sm:mb-6 group-hover:text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-amber-500 transition-colors">TRANSPORTATION</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-violet-500/80 mb-6 group-hover:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-violet-400 transition-colors">MEP (MECH / ELEC)</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-violet-500/80 mb-3.5 sm:mb-6 group-hover:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-violet-400 transition-colors">MEP (MECH / ELEC)</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-fuchsia-500/80 mb-6 group-hover:text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-fuchsia-400 transition-colors">CONSULTANCY</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-fuchsia-500/80 mb-3.5 sm:mb-6 group-hover:text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-fuchsia-400 transition-colors">CONSULTANCY</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-yellow-400/80 mb-6 group-hover:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-yellow-400 transition-colors">EDUCATION</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-yellow-400/80 mb-3.5 sm:mb-6 group-hover:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-yellow-400 transition-colors">EDUCATION</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-teal-400/80 mb-6 group-hover:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-teal-400 transition-colors">UTILITY</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-teal-400/80 mb-3.5 sm:mb-6 group-hover:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-teal-400 transition-colors">UTILITY</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-red-500/80 mb-6 group-hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M22 6l-20 12"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-red-500 transition-colors">RAILWAYS</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-red-500/80 mb-3.5 sm:mb-6 group-hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M22 6l-20 12"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-red-500 transition-colors">RAILWAYS</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-sky-600/80 mb-6 group-hover:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M17 21v-8H7v8M7 3v5h8"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-sky-600 transition-colors">CIVIL CONSTRUCTION</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-sky-600/80 mb-3.5 sm:mb-6 group-hover:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M17 21v-8H7v8M7 3v5h8"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-sky-600 transition-colors">CIVIL CONSTRUCTION</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-stone-500/80 mb-6 group-hover:text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-stone-500 transition-colors">ROADS & INFRASTRUCTURE</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-stone-500/80 mb-3.5 sm:mb-6 group-hover:text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-stone-500 transition-colors">ROADS & INFRASTRUCTURE</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-pink-500/80 mb-6 group-hover:text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-pink-500 transition-colors">ELECTROMECHANICAL</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-pink-500/80 mb-3.5 sm:mb-6 group-hover:text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-pink-500 transition-colors">ELECTROMECHANICAL</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-green-600/80 mb-6 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-green-600 transition-colors">FACILITY MANAGEMENT</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-green-600/80 mb-3.5 sm:mb-6 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-green-600 transition-colors">FACILITY MANAGEMENT</span>
                 </div>
-                <div class="reveal icon-hover-container bg-bepl-bg p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer">
-                    <svg class="w-10 h-10 text-orange-700/80 mb-6 group-hover:text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
-                    <span class="text-[11px] xl:text-[12px] font-extrabold text-bepl-text-body tracking-[0.2em] group-hover:text-orange-700 transition-colors">HEAVY FABRICATION</span>
+                <div class="reveal icon-hover-container bg-bepl-bg p-5 sm:p-8 lg:p-12 flex flex-col items-center justify-center text-center group cursor-pointer col-span-2 md:col-span-1">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-orange-700/80 mb-3.5 sm:mb-6 group-hover:text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+                    <span class="text-[10px] sm:text-[11px] xl:text-[12px] leading-snug font-extrabold text-bepl-text-body tracking-[0.12em] sm:tracking-[0.2em] group-hover:text-orange-700 transition-colors">HEAVY FABRICATION</span>
                 </div>
                 
                 <!-- CTA Block to fill remaining grid slots -->
-                <div class="reveal col-span-2 md:col-span-3 lg:col-span-3 bg-bepl-card p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between text-left group gap-6 border-none">
+                <div class="reveal col-span-2 md:col-span-3 lg:col-span-3 bg-bepl-card p-6 sm:p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between text-left group gap-5 sm:gap-6 border-none">
                     <p class="text-bepl-text-main font-medium text-sm xl:text-[15px] leading-relaxed max-w-2xl text-center md:text-left">
                         Delivering unparalleled workforce solutions across these sectors since 1973. Connect with our team to discuss your mobilization needs.
                     </p>
-                    <a href="contact.html" class="inline-flex shrink-0 items-center text-[11px] font-bold uppercase tracking-widest text-bepl-bg bg-bepl-blue px-6 py-3 rounded-sm hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(47,78,115,0.2)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                    <a href="contact.html" class="inline-flex w-full sm:w-auto justify-center shrink-0 items-center text-[11px] font-bold uppercase tracking-widest text-bepl-bg bg-bepl-blue px-6 py-3.5 sm:py-3 rounded-sm hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(47,78,115,0.2)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                         Contact Us <span class="ml-2">→</span>
                     </a>
                 </div>
@@ -284,72 +360,72 @@
         </div>
     </section>
 
-    <!-- NEW LUXURY EDITORIAL DESTINATIONS SECTION -->
-    <section id="destinations" class="w-full bg-bepl-card py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10">
-        <div class="max-w-[1500px] mx-auto w-full flex flex-col lg:flex-row gap-16 lg:gap-24">
+    <!-- LUXURY EDITORIAL DESTINATIONS SECTION -->
+    <section id="destinations" class="w-full bg-bepl-card py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10 border-t border-bepl-blue/10">
+        <div class="max-w-[1500px] mx-auto w-full flex flex-col lg:flex-row gap-10 sm:gap-16 lg:gap-24">
             
             <!-- Left Column: Sticky Anchor -->
             <div class="w-full lg:w-[40%] lg:sticky lg:top-32 h-fit reveal">
-                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Global Reach</span>
-                <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main mb-6">Major Talent Destinations.</h2>
-                <p class="text-bepl-text-body font-medium text-[15px] leading-relaxed max-w-md">
+                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Global Reach</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main mb-4 sm:mb-6">Major Talent Destinations.</h2>
+                <p class="text-bepl-text-body font-medium text-sm sm:text-[15px] leading-relaxed max-w-md">
                     Leveraging decades of established infrastructure to deploy elite workforces across the world's most demanding markets.
                 </p>
             </div>
 
             <!-- Right Column: Details -->
-            <div class="w-full lg:w-[60%] flex flex-col space-y-16 lg:space-y-24">
+            <div class="w-full lg:w-[60%] flex flex-col space-y-12 sm:space-y-16 lg:space-y-24">
                 
                 <!-- Region 1 -->
-                <div class="reveal border-t-2 border-bepl-gold/30 pt-6">
-                    <span class="text-xs font-bold tracking-widest text-bepl-gold mb-8 block">01 / MIDDLE EAST</span>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
-                        <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block mb-1.5">United Arab Emirates</strong>
-                            <span class="text-sm text-bepl-text-muted">Dubai &bull; Sharjah &bull; Umm Al Quwain &bull; Ajman &bull; Fujairah &bull; Ras Al Khaimah</span>
+                <div class="reveal border-t-2 border-bepl-gold/30 pt-5 sm:pt-6">
+                    <span class="text-xs font-bold tracking-widest text-bepl-gold mb-6 sm:mb-8 block">01 / MIDDLE EAST</span>
+                    <div class="grid grid-cols-2 md:grid-cols-2 gap-y-6 sm:gap-y-8 gap-x-6 sm:gap-x-12">
+                        <div class="col-span-2 md:col-span-1">
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block mb-1.5">United Arab Emirates</strong>
+                            <span class="text-xs sm:text-sm text-bepl-text-muted leading-relaxed block">Dubai &bull; Sharjah &bull; Umm Al Quwain &bull; Ajman &bull; Fujairah &bull; Ras Al Khaimah</span>
                         </div>
-                        <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block mb-1.5">Oman</strong>
-                            <span class="text-sm text-bepl-text-muted">Muscat &bull; Salalah &bull; Sohar</span>
+                        <div class="col-span-2 md:col-span-1">
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block mb-1.5">Oman</strong>
+                            <span class="text-xs sm:text-sm text-bepl-text-muted leading-relaxed block">Muscat &bull; Salalah &bull; Sohar</span>
                         </div>
-                        <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block">Saudi Arabia</strong>
+                        <div class="col-span-1">
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Saudi Arabia</strong>
                         </div>
-                        <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block">Bahrain</strong>
+                        <div class="col-span-1">
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Bahrain</strong>
                         </div>
-                        <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block">Kuwait</strong>
+                        <div class="col-span-1">
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Kuwait</strong>
                         </div>
-                        <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block">Qatar</strong>
+                        <div class="col-span-1">
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Qatar</strong>
                         </div>
                     </div>
                 </div>
 
                 <!-- Region 2 -->
-                <div class="reveal border-t-2 border-bepl-gold/30 pt-6" style="transition-delay: 0.1s;">
-                    <span class="text-xs font-bold tracking-widest text-bepl-gold mb-8 block">02 / AFRICA</span>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
+                <div class="reveal border-t-2 border-bepl-gold/30 pt-5 sm:pt-6" style="transition-delay: 0.1s;">
+                    <span class="text-xs font-bold tracking-widest text-bepl-gold mb-6 sm:mb-8 block">02 / AFRICA</span>
+                    <div class="grid grid-cols-2 md:grid-cols-2 gap-y-6 sm:gap-y-8 gap-x-6 sm:gap-x-12">
                         <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block mb-1.5">Ethiopia</strong>
-                            <span class="text-sm text-bepl-text-muted">Addis Ababa</span>
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block mb-1">Ethiopia</strong>
+                            <span class="text-xs sm:text-sm text-bepl-text-muted">Addis Ababa</span>
                         </div>
                         <div>
-                            <strong class="text-xl font-serif text-bepl-text-main block mb-1.5">Mozambique</strong>
-                            <span class="text-sm text-bepl-text-muted">Maputo</span>
+                            <strong class="text-lg sm:text-xl font-serif text-bepl-text-main block mb-1">Mozambique</strong>
+                            <span class="text-xs sm:text-sm text-bepl-text-muted">Maputo</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Region 3 -->
-                <div class="reveal border-t-2 border-bepl-gold/30 pt-6" style="transition-delay: 0.2s;">
-                    <span class="text-xs font-bold tracking-widest text-bepl-gold mb-8 block">03 / EUROPE & BEYOND</span>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
-                        <div><strong class="text-xl font-serif text-bepl-text-main block">United Kingdom</strong></div>
-                        <div><strong class="text-xl font-serif text-bepl-text-main block">Ireland</strong></div>
-                        <div><strong class="text-xl font-serif text-bepl-text-main block">Romania</strong></div>
-                        <div><strong class="text-xl font-serif text-bepl-text-main block">Israel</strong></div>
+                <div class="reveal border-t-2 border-bepl-gold/30 pt-5 sm:pt-6" style="transition-delay: 0.2s;">
+                    <span class="text-xs font-bold tracking-widest text-bepl-gold mb-6 sm:mb-8 block">03 / EUROPE & BEYOND</span>
+                    <div class="grid grid-cols-2 md:grid-cols-2 gap-y-6 sm:gap-y-8 gap-x-6 sm:gap-x-12">
+                        <div><strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">United Kingdom</strong></div>
+                        <div><strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Ireland</strong></div>
+                        <div><strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Romania</strong></div>
+                        <div><strong class="text-lg sm:text-xl font-serif text-bepl-text-main block">Israel</strong></div>
                     </div>
                 </div>
 
@@ -357,29 +433,29 @@
         </div>
     </section>
 
-    <footer class="w-full bg-bepl-dark border-t border-bepl-gold/20 relative overflow-hidden z-50">
+    <footer class="w-full bg-bepl-dark border-t border-bepl-gold/20 relative overflow-hidden z-30">
         
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[1px] bg-gradient-to-r from-transparent via-bepl-gold/50 to-transparent shadow-[0_0_30px_rgba(183,146,78,0.2)]"></div>
 
-        <div class="max-w-[1200px] mx-auto w-full px-6 lg:px-10 pt-20 pb-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-20">
+        <div class="max-w-[1200px] mx-auto w-full px-5 sm:px-6 lg:px-10 pt-14 sm:pt-20 pb-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-8 mb-14 sm:mb-20">
                 
                 <div class="md:col-span-5 flex flex-col items-start">
                     <a href="index.html" class="mb-4 inline-block border-none outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">
-                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd Logo" class="h-12 lg:h-16 w-auto object-contain transform scale-[1.1] lg:scale-[1.2] origin-left">
+                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd Logo" class="h-11 sm:h-12 lg:h-16 w-auto object-contain transform scale-[1.1] lg:scale-[1.2] origin-left">
                     </a>
-                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed mb-8 max-w-md">
+                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed mb-6 sm:mb-8 max-w-md">
                         We don't just fill seats; we engineer global workforces. Delivering elite, zero-risk talent acquisition with absolute logistical precision.
                     </p>
-                    <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-4 inline-block">
+                    <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-3.5 sm:p-4 inline-block w-full sm:w-auto">
                         <span class="text-[10px] uppercase tracking-widest text-bepl-gold font-bold block mb-1">Govt. of India Approved</span>
-                        <span class="text-[13px] text-bepl-text-body font-mono tracking-wider">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
+                        <span class="text-[11px] sm:text-[13px] text-bepl-text-body font-mono tracking-wider break-all sm:break-normal block">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
                     </div>
                 </div>
 
                 <div class="md:col-span-3 lg:col-span-3 md:pl-8 lg:pl-12">
-                    <h4 class="text-lg font-serif text-bepl-text-main mb-6">Navigation</h4>
-                    <ul class="flex flex-col space-y-4">
+                    <h4 class="text-lg font-serif text-bepl-text-main mb-4 sm:mb-6">Navigation</h4>
+                    <ul class="grid grid-cols-2 gap-y-3.5 gap-x-4 md:flex md:flex-col md:space-y-4 md:gap-0">
                         <li><a href="index.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Home</a></li>
                         <li><a href="aboutus.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">About Us</a></li>
                         <li><a href="services.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Services</a></li>
@@ -390,9 +466,9 @@
                 </div>
 
                 <div class="md:col-span-4 lg:col-span-4">
-                    <h4 class="text-lg font-serif text-bepl-text-main mb-6">Headquarters</h4>
+                    <h4 class="text-lg font-serif text-bepl-text-main mb-4 sm:mb-6">Headquarters</h4>
                     
-                    <address class="not-italic flex items-start mb-6 text-sm font-medium text-bepl-text-main">
+                    <address class="not-italic flex items-start mb-5 sm:mb-6 text-sm font-medium text-bepl-text-main">
                         <svg class="w-5 h-5 text-bepl-gold mt-0.5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         <span class="leading-relaxed">Ballard Estate,<br> Mumbai, Maharashtra,<br> India</span>
                     </address>
@@ -424,16 +500,16 @@
                     </div>
 
                     <div class="flex items-center space-x-4">
-                        <a href="#" aria-label="LinkedIn" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="LinkedIn" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         </a>
-                        <a href="#" aria-label="X" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="X" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </a>
-                        <a href="#" aria-label="Instagram" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="Instagram" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         </a>
-                        <a href="#" aria-label="Facebook" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="Facebook" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                         </a>
                     </div>
@@ -441,13 +517,50 @@
             </div>
 
             <div class="border-t border-bepl-blue/10 pt-8 flex justify-center items-center">
-                <p class="text-sm font-medium text-bepl-text-main text-center">© 2026 Bhatia Employment Pvt Ltd. All rights reserved.</p>
+                <p class="text-xs sm:text-sm font-medium text-bepl-text-main text-center">© 2026 Bhatia Employment Pvt Ltd. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // MOBILE MENU LOGIC
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const line1 = document.getElementById('burger-line-1');
+            const line2 = document.getElementById('burger-line-2');
+            let isMenuOpen = false;
+
+            if (menuBtn && mobileMenu) {
+                const toggleMenu = () => {
+                    isMenuOpen = !isMenuOpen;
+                    menuBtn.setAttribute('aria-expanded', isMenuOpen);
+                    if (isMenuOpen) {
+                        mobileMenu.classList.add('menu-open');
+                        document.body.style.overflow = 'hidden';
+                        line1.classList.add('rotate-45', 'translate-y-[4px]');
+                        line2.classList.remove('w-4', 'mt-1.5');
+                        line2.classList.add('w-6', '-rotate-45', '-translate-y-[3.5px]', 'bg-bepl-gold');
+                    } else {
+                        mobileMenu.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                        line1.classList.remove('rotate-45', 'translate-y-[4px]');
+                        line2.classList.remove('w-6', '-rotate-45', '-translate-y-[3.5px]', 'bg-bepl-gold');
+                        line2.classList.add('w-4', 'mt-1.5');
+                    }
+                };
+
+                menuBtn.addEventListener('click', toggleMenu);
+
+                // Close menu if a link inside is clicked or screen resizes to desktop
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => { if (isMenuOpen) toggleMenu(); });
+                });
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 1024 && isMenuOpen) toggleMenu();
+                });
+            }
+
             // GLOBE GL LOGIC
             const initGlobe = async () => {
                 const container = document.getElementById('globe-container');
@@ -479,13 +592,17 @@
                         .arcColor(() => ['#B7924E', '#2F4E73']).arcDashLength(0.4).arcDashGap(2).arcDashInitialGap(() => Math.random() * 2).arcDashAnimateTime(2000).arcStroke(0.6);
                     world.globeMaterial().color.setStyle('#F2EBDF');
                     
-                    world.pointOfView({ lat: 20.5937, lng: 78.9629, altitude: 1.7 }, 0);
+                    const getResponsiveAltitude = () => window.innerWidth < 768 ? 2.15 : 1.7;
+                    world.pointOfView({ lat: 20.5937, lng: 78.9629, altitude: getResponsiveAltitude() }, 0);
                     
                     world.controls().autoRotate = true;
                     world.controls().autoRotateSpeed = 0.5;
                     world.controls().enableZoom = false;
                     setTimeout(() => { world.arcsData(movingPulses); world.ringsData(landingPads); }, 500);
-                    window.addEventListener('resize', () => { world.width(container.offsetWidth).height(container.offsetHeight); });
+                    window.addEventListener('resize', () => {
+                        world.width(container.offsetWidth).height(container.offsetHeight);
+                        world.pointOfView({ lat: 20.5937, lng: 78.9629, altitude: getResponsiveAltitude() }, 0);
+                    });
                 } catch (err) { console.error("Globe Load Error:", err); }
             };
             initGlobe();
