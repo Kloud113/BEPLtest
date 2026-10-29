@@ -37,6 +37,25 @@
     <style>
         html { scroll-behavior: smooth; }
         
+        /* Mobile Menu Overlay Animations */
+        #mobile-menu {
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.menu-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #mobile-menu .mobile-nav-item {
+            transform: translateY(16px);
+            opacity: 0;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.menu-open .mobile-nav-item {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
         /* Standard Reveal */
         .reveal {
             opacity: 0;
@@ -93,19 +112,19 @@
 <body class="bg-bepl-bg text-bepl-text-body font-sans subpixel-antialiased overflow-x-hidden selection:bg-bepl-gold selection:text-bepl-bg">
 
     <!-- HEADER (Navigation Ribbon) -->
-    <header class="bg-bepl-dark px-6 lg:px-10 py-3 lg:py-4 border-b border-bepl-blue/10 w-full shrink-0 z-50 sticky top-0">
+    <header class="bg-bepl-dark px-5 sm:px-6 lg:px-10 py-3 lg:py-4 border-b border-bepl-blue/10 w-full shrink-0 z-50 sticky top-0">
         <div class="max-w-[1500px] mx-auto flex justify-between items-center w-full">
             
             <!-- Logo & Brand Lockup -->
             <div class="flex items-center shrink-0">
                 <a href="index.html" class="flex items-center border-none outline-none relative z-10">
-                    <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd" class="h-10 lg:h-12 w-auto object-contain transform scale-[1.2] lg:scale-[1.3] origin-left">
+                    <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd" class="h-9 sm:h-10 lg:h-12 w-auto object-contain transform scale-[1.15] sm:scale-[1.2] lg:scale-[1.3] origin-left">
                 </a>
                 
                 <!-- BEBTA Divider and Text (Optically aligned) -->
-                <div class="hidden sm:flex items-center ml-10 lg:ml-14 mt-1 lg:mt-1.5">
-                    <div class="h-6 lg:h-7 w-[1px] bg-bepl-gold/60 mr-4 lg:mr-5"></div>
-                    <span class="text-bepl-gold font-serif font-normal text-[15px] lg:text-[17px] uppercase tracking-[0.2em] cursor-default leading-none">
+                <div class="flex items-center ml-6 sm:ml-10 lg:ml-14 mt-0.5 sm:mt-1 lg:mt-1.5">
+                    <div class="h-5 sm:h-6 lg:h-7 w-[1px] bg-bepl-gold/60 mr-3 sm:mr-4 lg:mr-5"></div>
+                    <span class="text-bepl-gold font-serif font-normal text-[13px] sm:text-[15px] lg:text-[17px] uppercase tracking-[0.18em] sm:tracking-[0.2em] cursor-default leading-none">
                         BEBTA
                     </span>
                 </div>
@@ -126,8 +145,62 @@
                     </li>
                 </ul>
             </nav>
+
+            <!-- Mobile Hamburger Trigger -->
+            <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" aria-expanded="false" class="lg:hidden flex flex-col justify-center items-end w-10 h-10 p-1.5 text-bepl-text-main focus:outline-none z-50">
+                <span id="burger-line-1" class="block w-6 h-[1.5px] bg-bepl-gold transition-all duration-300 origin-center"></span>
+                <span id="burger-line-2" class="block w-4 h-[1.5px] bg-bepl-text-main mt-1.5 transition-all duration-300 origin-center"></span>
+            </button>
         </div>
     </header>
+
+    <!-- Full-Screen Editorial Mobile Navigation Drawer (Hidden on lg+) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-bepl-dark z-40 lg:hidden flex flex-col justify-between px-6 pt-24 pb-8 opacity-0 invisible pointer-events-none overflow-y-auto">
+        <nav aria-label="Mobile Navigation" class="my-auto">
+            <ul class="flex flex-col space-y-5">
+                <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.05s;">
+                    <a href="index.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                        <span>Home</span>
+                        <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">01</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.1s;">
+                    <a href="aboutus.html" class="flex items-center justify-between text-2xl font-serif text-bepl-gold font-semibold transition-colors">
+                        <span>About Us</span>
+                        <span class="text-xs font-sans tracking-widest uppercase text-bepl-gold/70">02</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.15s;">
+                    <a href="services.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                        <span>Services</span>
+                        <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">03</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.2s;">
+                    <a href="currentvacancies.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                        <span>Current Vacancies</span>
+                        <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">04</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item border-b border-bepl-blue/10 pb-3" style="transition-delay: 0.25s;">
+                    <a href="ourclients.html" class="flex items-center justify-between text-2xl font-serif text-bepl-text-main hover:text-bepl-gold transition-colors">
+                        <span>Our Clients</span>
+                        <span class="text-xs font-sans tracking-widest uppercase text-bepl-text-muted">05</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="mobile-nav-item pt-6 flex flex-col space-y-4" style="transition-delay: 0.3s;">
+            <a href="contact.html" class="w-full bg-bepl-blue text-[#F7F2E8] py-4 rounded-sm text-center text-xs font-bold uppercase tracking-[0.2em] shadow-sm active:scale-[0.99] transition-transform">
+                Contact Us →
+            </a>
+            <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-3 text-center">
+                <span class="text-[9px] uppercase tracking-widest text-bepl-gold font-bold block mb-0.5">Govt. of India Approved</span>
+                <span class="text-[11px] text-bepl-text-body font-mono tracking-wider block">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
+            </div>
+        </div>
+    </div>
 
     <main>
         <!-- HERITAGE HERO SECTION -->
@@ -137,48 +210,48 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-bepl-bg via-bepl-bg/70 to-bepl-bg/20"></div>
             </div>
             
-            <div class="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-10 text-center hero-fade-in pt-20 pb-12">
-                <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-6 block">Company Introduction</span>
-                <h1 class="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-bepl-text-main mb-8 leading-[1.1]">
-                    Pioneering Human Resource <br/>Excellence Since 1973.
+            <div class="relative z-10 max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-10 text-center hero-fade-in pt-16 sm:pt-20 pb-10 sm:pb-12">
+                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Company Introduction</span>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-bepl-text-main mb-6 sm:mb-8 leading-[1.1]">
+                    Pioneering Human Resource <br class="hidden sm:block"/>Excellence Since 1973.
                 </h1>
-                <div class="w-24 h-[1px] bg-bepl-gold/50 mx-auto mb-8"></div>
-                <p class="text-lg md:text-xl text-bepl-text-main font-medium max-w-3xl mx-auto leading-relaxed">
+                <div class="w-24 h-[1px] bg-bepl-gold/50 mx-auto mb-6 sm:mb-8"></div>
+                <p class="text-base sm:text-lg md:text-xl text-bepl-text-main font-medium max-w-3xl mx-auto leading-relaxed">
                     For three generations, we have been the architects of global workforces. Born from a vision to elevate Indian talent on the world stage, our legacy is built on precision, trust, and the seamless deployment of skilled professionals across premier international industries. We don't just fill positions; we engineer futures.
                 </p>
             </div>
         </section>
 
         <!-- COMPANY INTRO REEL -->
-        <section class="relative w-full bg-bepl-dark py-24 lg:py-32 px-6 lg:px-10 border-b border-bepl-blue/10 overflow-hidden">
-            <div class="relative z-10 max-w-[1200px] mx-auto w-full flex flex-col lg:flex-row items-center gap-16 lg:gap-24 reveal">
+        <section class="relative w-full bg-bepl-dark py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10 border-b border-bepl-blue/10 overflow-hidden">
+            <div class="relative z-10 max-w-[1200px] mx-auto w-full flex flex-col lg:flex-row items-center gap-10 sm:gap-16 lg:gap-24 reveal">
 
                 <!-- Text column -->
                 <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Discover BEBTA</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main mb-6 leading-[1.15]">Watch Our Story.</h2>
-                    <div class="w-24 h-[1px] bg-bepl-gold/50 mb-8"></div>
-                    <p class="text-base font-medium text-bepl-text-main leading-relaxed mb-10 max-w-lg">
+                    <span class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Discover BEBTA</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main mb-4 sm:mb-6 leading-[1.15]">Watch Our Story.</h2>
+                    <div class="w-24 h-[1px] bg-bepl-gold/50 mb-6 sm:mb-8"></div>
+                    <p class="text-sm sm:text-base font-medium text-bepl-text-main leading-relaxed mb-8 sm:mb-10 max-w-lg">
                         A short look at the people, the process and the legacy behind Bhatia Employment. See how we have been connecting skilled professionals with premier international employers since 1973.
                     </p>
-                    <blockquote class="border-l-2 border-bepl-gold pl-6 mb-10 max-w-lg text-left">
-                        <p class="font-serif italic text-2xl lg:text-3xl text-bepl-text-main leading-snug">
+                    <blockquote class="border-l-2 border-bepl-gold pl-5 sm:pl-6 mb-8 sm:mb-10 max-w-lg text-left">
+                        <p class="font-serif italic text-xl sm:text-2xl lg:text-3xl text-bepl-text-main leading-snug">
                             We don't just fill positions; we engineer futures.
                         </p>
                     </blockquote>
-                    <a href="https://www.instagram.com/reel/DXgHDWLo2zX/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 border-[1.5px] border-bepl-gold text-bepl-gold text-xs font-bold uppercase tracking-[0.15em] px-6 py-3 rounded-sm hover:bg-bepl-gold hover:text-white hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <a href="https://www.instagram.com/reel/DXgHDWLo2zX/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer" class="inline-flex w-full sm:w-auto justify-center items-center gap-3 border-[1.5px] border-bepl-gold text-bepl-gold text-xs font-bold uppercase tracking-[0.15em] px-6 py-3.5 sm:py-3 rounded-sm hover:bg-bepl-gold hover:text-white hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         Watch on Instagram
                     </a>
                 </div>
 
-                <!-- Reel column (framed, matches Integrated Infrastructure styling) -->
+                <!-- Reel column -->
                 <div class="w-full lg:w-1/2 flex justify-center">
                     <div class="relative w-full max-w-[400px]">
-                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 translate-x-4 translate-y-4 pointer-events-none"></div>
+                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 translate-x-2 sm:translate-x-4 translate-y-2 sm:translate-y-4 pointer-events-none"></div>
                         <div class="bg-bepl-card border border-bepl-blue/10 shadow-md p-3 sm:p-4">
                             <div class="bg-white border border-bepl-blue/10 overflow-hidden flex justify-center [&_.instagram-media]:!m-0 [&_.instagram-media]:!min-w-0 [&_.instagram-media]:!max-w-full [&_.instagram-media]:!w-full [&_.instagram-media]:!shadow-none [&_.instagram-media]:!rounded-none">
-                                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXgHDWLo2zX/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin:0; max-width:100%; min-width:0; padding:0; width:100%;">
+                                <blockquote class="instagram-media pointer-events-none lg:pointer-events-auto" data-instgrm-permalink="https://www.instagram.com/reel/DXgHDWLo2zX/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin:0; max-width:100%; min-width:0; padding:0; width:100%;">
                                     <div style="padding:16px;">
                                         <a href="https://www.instagram.com/reel/DXgHDWLo2zX/?utm_source=ig_embed&amp;utm_campaign=loading" style="background:#FFFFFF; line-height:0; padding:0; text-align:center; text-decoration:none; width:100%; display:block;" target="_blank" rel="noopener noreferrer">
                                             <div style="padding: 60% 0;"></div>
@@ -197,24 +270,24 @@
         </section>
 
         <!-- THE VISIONARIES (LEADERSHIP) -->
-        <section class="w-full bg-bepl-bg py-24 lg:py-32 px-6 lg:px-10">
+        <section class="w-full bg-bepl-bg py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10">
             <div class="max-w-[1500px] mx-auto w-full">
-                <div class="text-center mb-20 reveal">
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">The Visionaries</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Three Generations of Excellence.</h2>
+                <div class="text-center mb-10 sm:mb-16 lg:mb-20 reveal">
+                    <span class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">The Visionaries</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main">Three Generations of Excellence.</h2>
                 </div>
 
                 <!-- Tier 1: The Founders -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20 items-start">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 mb-16 sm:mb-20 items-start">
                     
                     <!-- L.C. Bhatia -->
                     <article class="reveal flex flex-col items-center lg:items-start text-center lg:text-left w-full group">
-                        <figure class="sheen-container w-full aspect-[4/3] mb-8 border border-bepl-blue/10 shadow-sm relative">
+                        <figure class="sheen-container w-full aspect-[4/3] mb-6 sm:mb-8 border border-bepl-blue/10 shadow-sm relative">
                             <img src="lc-bhatia-portrait.png" alt="Portrait of Late Shri Laxmandas C. Bhatia" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-bepl-text-main/80 via-transparent to-transparent opacity-90 z-10 pointer-events-none"></div>
-                            <figcaption class="absolute bottom-6 left-6 right-6 text-left z-10">
-                                <h3 class="text-2xl md:text-3xl font-serif text-[#F7F2E8] mb-1">Late Shri Laxmandas C. Bhatia</h3>
-                                <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold">The Founder</span>
+                            <figcaption class="absolute bottom-5 sm:bottom-6 left-5 sm:left-6 right-5 sm:right-6 text-left z-10">
+                                <h3 class="text-2xl sm:text-3xl font-serif text-[#F7F2E8] mb-1">Late Shri Laxmandas C. Bhatia</h3>
+                                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-bepl-gold">The Founder</span>
                             </figcaption>
                         </figure>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed">
@@ -224,12 +297,12 @@
 
                     <!-- M.L. Bhatia -->
                     <article class="reveal flex flex-col items-center lg:items-start text-center lg:text-left w-full group" style="transition-delay: 0.2s;">
-                        <figure class="sheen-container w-full aspect-[4/3] mb-8 border border-bepl-blue/10 shadow-sm relative">
+                        <figure class="sheen-container w-full aspect-[4/3] mb-6 sm:mb-8 border border-bepl-blue/10 shadow-sm relative">
                             <img src="ml-bhatia-portrait.jpg" alt="Portrait of Mr. M. L. Bhatia" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-bepl-text-main/80 via-transparent to-transparent opacity-90 z-10 pointer-events-none"></div>
-                            <figcaption class="absolute bottom-6 left-6 right-6 text-left z-10">
-                                <h3 class="text-2xl md:text-3xl font-serif text-[#F7F2E8] mb-1">Mr. M. L. Bhatia</h3>
-                                <span class="text-xs font-bold uppercase tracking-widest text-bepl-gold">Director</span>
+                            <figcaption class="absolute bottom-5 sm:bottom-6 left-5 sm:left-6 right-5 sm:right-6 text-left z-10">
+                                <h3 class="text-2xl sm:text-3xl font-serif text-[#F7F2E8] mb-1">Mr. M. L. Bhatia</h3>
+                                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-bepl-gold">Director</span>
                             </figcaption>
                         </figure>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed">
@@ -238,36 +311,36 @@
                     </article>
                 </div>
 
-                <!-- Tier 2: Directorate (New Vertical Layout) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14 w-full mx-auto border-t border-bepl-blue/10 pt-20">
+                <!-- Tier 2: Directorate -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 lg:gap-14 w-full mx-auto border-t border-bepl-blue/10 pt-16 sm:pt-20">
                     
                     <!-- Pradip Sunderji -->
                     <article class="reveal flex flex-col items-center text-center group">
-                        <figure class="w-full max-w-[280px] aspect-square mb-6 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm relative">
+                        <figure class="w-full max-w-[280px] aspect-square mb-5 sm:mb-6 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm relative">
                             <img src="director-3-portrait.jpg" alt="Portrait of Mr. Pradip Sunderji" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
                         </figure>
-                        <h4 class="text-2xl font-serif text-bepl-text-main mb-1 group-hover:text-bepl-gold transition-colors duration-300">Mr. Pradip Sunderji</h4>
-                        <span class="text-[11px] font-bold uppercase tracking-widest text-bepl-gold mb-4">Sr. Executive (Overseas Ops)</span>
+                        <h4 class="text-xl sm:text-2xl font-serif text-bepl-text-main mb-1 group-hover:text-bepl-gold transition-colors duration-300">Mr. Pradip Sunderji</h4>
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-bepl-gold mb-3 sm:mb-4">Sr. Executive (Overseas Ops)</span>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed px-2">Spearheading our international logistics with tactical precision, ensuring that cross-border talent integration is executed flawlessly and aligns perfectly with dynamic global market demands.</p>
                     </article>
 
                     <!-- Jawahar Bhatia -->
                     <article class="reveal flex flex-col items-center text-center group" style="transition-delay: 0.1s;">
-                        <figure class="w-full max-w-[280px] aspect-square mb-6 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm relative">
+                        <figure class="w-full max-w-[280px] aspect-square mb-5 sm:mb-6 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm relative">
                             <img src="director-4-portrait.jpeg" alt="Portrait of Mr. Jawahar Bhatia" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
                         </figure>
-                        <h4 class="text-2xl font-serif text-bepl-text-main mb-1 group-hover:text-bepl-gold transition-colors duration-300">Mr. Jawahar Bhatia</h4>
-                        <span class="text-[11px] font-bold uppercase tracking-widest text-bepl-gold mb-4">Sr. Executive (Overseas Ops)</span>
+                        <h4 class="text-xl sm:text-2xl font-serif text-bepl-text-main mb-1 group-hover:text-bepl-gold transition-colors duration-300">Mr. Jawahar Bhatia</h4>
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-bepl-gold mb-3 sm:mb-4">Sr. Executive (Overseas Ops)</span>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed px-2">Driving operational excellence and maintaining rigorous compliance protocols, guaranteeing that every placement meets and exceeds our elite global standards without compromise.</p>
                     </article>
 
                     <!-- Pathik Chhowala -->
-                    <article class="reveal flex flex-col items-center text-center group" style="transition-delay: 0.2s;">
-                        <figure class="w-full max-w-[280px] aspect-square mb-6 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm relative">
+                    <article class="reveal flex flex-col items-center text-center group sm:col-span-2 md:col-span-1" style="transition-delay: 0.2s;">
+                        <figure class="w-full max-w-[280px] aspect-square mb-5 sm:mb-6 border border-bepl-blue/10 overflow-hidden shadow-sm bg-bepl-dark rounded-sm relative">
                             <img src="pathik.jfif" alt="Portrait of Mr. Pathik Chhowala" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
                         </figure>
-                        <h4 class="text-2xl font-serif text-bepl-text-main mb-1 group-hover:text-bepl-gold transition-colors duration-300">Mr. Pathik Chhowala</h4>
-                        <span class="text-[11px] font-bold uppercase tracking-widest text-bepl-gold mb-4">Sr. Executive</span>
+                        <h4 class="text-xl sm:text-2xl font-serif text-bepl-text-main mb-1 group-hover:text-bepl-gold transition-colors duration-300">Mr. Pathik Chhowala</h4>
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-bepl-gold mb-3 sm:mb-4">Sr. Executive</span>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed px-2">Executing strategic talent acquisition and facilitating seamless client communications, ensuring efficient deployment cycles that meet stringent international benchmarks.</p>
                     </article>
                     
@@ -276,49 +349,49 @@
         </section>
 
         <!-- IN-HOUSE INFRASTRUCTURE -->
-        <section class="w-full bg-bepl-dark py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10 overflow-hidden">
+        <section class="w-full bg-bepl-dark py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10 border-t border-bepl-blue/10 overflow-hidden">
             <div class="max-w-[1500px] mx-auto w-full">
-                <div class="text-center mb-20 reveal">
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Our Ecosystem</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Integrated Infrastructure.</h2>
+                <div class="text-center mb-10 sm:mb-16 lg:mb-20 reveal">
+                    <span class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Our Ecosystem</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main">Integrated Infrastructure.</h2>
                 </div>
 
                 <!-- Medical Clinic -->
-                <article class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 mb-24 reveal">
+                <article class="flex flex-col lg:flex-row items-center gap-10 sm:gap-12 lg:gap-20 mb-16 sm:mb-24 reveal">
                     <figure class="w-full lg:w-1/2 relative">
-                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 translate-x-4 translate-y-4 pointer-events-none"></div>
-                        <div class="border border-bepl-blue/10 shadow-md h-[500px] lg:h-[700px] overflow-hidden">
+                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 translate-x-2 sm:translate-x-4 translate-y-2 sm:translate-y-4 pointer-events-none"></div>
+                        <div class="border border-bepl-blue/10 shadow-md h-[320px] sm:h-[500px] lg:h-[700px] overflow-hidden">
                             <img src="medical-clinic-stock.png" alt="Modern Medical Testing Facility at Dr. Bhatia's Clinic" loading="lazy" decoding="async" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                         </div>
                     </figure>
                     <div class="w-full lg:w-1/2 flex flex-col">
-                        <span class="text-xs font-bold text-bepl-gold tracking-widest uppercase mb-3 border-l-2 border-bepl-gold pl-3">Medical Centre</span>
-                        <h3 class="text-3xl font-serif text-bepl-text-main mb-6">Dr. Bhatia's Clinic</h3>
-                        <p class="text-base font-medium text-bepl-text-main leading-relaxed mb-6">
+                        <span class="text-[10px] sm:text-xs font-bold text-bepl-gold tracking-widest uppercase mb-2 sm:mb-3 border-l-2 border-bepl-gold pl-3">Medical Centre</span>
+                        <h3 class="text-2xl sm:text-3xl font-serif text-bepl-text-main mb-4 sm:mb-6">Dr. Bhatia's Clinic</h3>
+                        <p class="text-sm sm:text-base font-medium text-bepl-text-main leading-relaxed mb-6">
                             Uncompromising health and compliance. Our in-house medical facility, spearheaded by G.C.C certified Dr. H.S. Bhatia, streamlines the deployment lifecycle. We conduct rigorous, full-spectrum medical assessments to guarantee the highest standards of occupational readiness for our clients worldwide.
                         </p>
-                        <div class="bg-bepl-card border border-bepl-blue/10 p-4 w-max shadow-sm">
-                            <span class="text-xs uppercase tracking-widest text-bepl-text-main font-bold">GAMCA / G.C.C. Recognised</span>
+                        <div class="bg-bepl-card border border-bepl-blue/10 p-3.5 sm:p-4 w-max shadow-sm">
+                            <span class="text-[10px] sm:text-xs uppercase tracking-widest text-bepl-text-main font-bold">GAMCA / G.C.C. Recognised</span>
                         </div>
                     </div>
                 </article>
 
                 <!-- Travel Division -->
-                <article class="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20 reveal">
+                <article class="flex flex-col lg:flex-row-reverse items-center gap-10 sm:gap-12 lg:gap-20 reveal">
                     <figure class="w-full lg:w-1/2 relative">
-                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 -translate-x-4 translate-y-4 pointer-events-none"></div>
-                        <div class="border border-bepl-blue/10 shadow-md h-[500px] lg:h-[700px] overflow-hidden">
+                        <div class="absolute -inset-4 border border-bepl-gold/30 -z-10 -translate-x-2 sm:-translate-x-4 translate-y-2 sm:translate-y-4 pointer-events-none"></div>
+                        <div class="border border-bepl-blue/10 shadow-md h-[320px] sm:h-[500px] lg:h-[700px] overflow-hidden">
                             <img src="aviation-travel-stock.jpg" alt="Global Aviation Logistics for Bhatia Travels" loading="lazy" decoding="async" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                         </div>
                     </figure>
                     <div class="w-full lg:w-1/2 flex flex-col">
-                        <span class="text-xs font-bold text-bepl-gold tracking-widest uppercase mb-3 border-l-2 border-bepl-gold pl-3">Travel Division</span>
-                        <h3 class="text-3xl font-serif text-bepl-text-main mb-6">Bhatia Travels</h3>
-                        <p class="text-base font-medium text-bepl-text-main leading-relaxed mb-6">
+                        <span class="text-[10px] sm:text-xs font-bold text-bepl-gold tracking-widest uppercase mb-2 sm:mb-3 border-l-2 border-bepl-gold pl-3">Travel Division</span>
+                        <h3 class="text-2xl sm:text-3xl font-serif text-bepl-text-main mb-4 sm:mb-6">Bhatia Travels</h3>
+                        <p class="text-sm sm:text-base font-medium text-bepl-text-main leading-relaxed mb-6">
                             Logistics, perfected. Our IATA-recognized travel division completes the recruitment ecosystem, orchestrating hassle-free ticketing, local transport, and accommodation. We eliminate delays and latent issues, ensuring your workforce arrives on time, every time, ready to drive your projects forward.
                         </p>
-                        <div class="bg-bepl-card border border-bepl-blue/10 p-4 w-max shadow-sm">
-                            <span class="text-xs uppercase tracking-widest text-bepl-text-main font-bold">IATA Recognised</span>
+                        <div class="bg-bepl-card border border-bepl-blue/10 p-3.5 sm:p-4 w-max shadow-sm">
+                            <span class="text-[10px] sm:text-xs uppercase tracking-widest text-bepl-text-main font-bold">IATA Recognised</span>
                         </div>
                     </div>
                 </article>
@@ -326,28 +399,28 @@
         </section>
 
         <!-- GEOGRAPHICAL FOOTPRINT -->
-        <section class="w-full bg-bepl-bg py-24 px-6 lg:px-10 border-t border-bepl-blue/10">
-            <div class="max-w-[1500px] mx-auto w-full flex flex-col md:flex-row justify-between items-center bg-bepl-card border border-bepl-blue/10 shadow-sm p-10 lg:p-16 reveal">
-                <div class="w-full md:w-1/3 mb-10 md:mb-0">
-                    <h3 class="text-3xl font-serif text-bepl-text-main mb-4">Strategic Sourcing</h3>
-                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed max-w-xs">Global reach, localized expertise. We actively source elite manpower from prime geographical hubs, curating a highly adaptable talent pool.</p>
+        <section class="w-full bg-bepl-bg py-16 sm:py-24 px-5 sm:px-6 lg:px-10 border-t border-bepl-blue/10">
+            <div class="max-w-[1500px] mx-auto w-full flex flex-col md:flex-row justify-between items-center bg-bepl-card border border-bepl-blue/10 shadow-sm p-6 sm:p-10 lg:p-16 reveal">
+                <div class="w-full md:w-1/3 mb-8 sm:mb-10 md:mb-0 text-center md:text-left">
+                    <h3 class="text-2xl sm:text-3xl font-serif text-bepl-text-main mb-3 sm:mb-4 lg:whitespace-nowrap">Strategic Sourcing</h3>
+                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed max-w-xs mx-auto md:mx-0">Global reach, localized expertise. We actively source elite manpower from prime geographical hubs, curating a highly adaptable talent pool.</p>
                 </div>
                 
-                <div class="w-full md:w-2/3 flex flex-wrap justify-center md:justify-end gap-6 md:gap-12">
+                <div class="w-full md:w-2/3 grid grid-cols-2 md:flex md:flex-wrap justify-center md:justify-end gap-x-6 gap-y-6 md:gap-12">
                     <div class="text-center group">
-                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">India</span>
+                        <span class="block text-xl sm:text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">India</span>
                         <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
                     </div>
                     <div class="text-center group">
-                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Nepal</span>
+                        <span class="block text-xl sm:text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Nepal</span>
                         <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
                     </div>
                     <div class="text-center group">
-                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Bangladesh</span>
+                        <span class="block text-xl sm:text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Bangladesh</span>
                         <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
                     </div>
                     <div class="text-center group">
-                        <span class="block text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Sri Lanka</span>
+                        <span class="block text-xl sm:text-2xl font-serif text-bepl-text-main group-hover:text-bepl-gold transition-colors mb-2">Sri Lanka</span>
                         <div class="h-px w-full bg-bepl-gold/30 group-hover:bg-bepl-gold transition-colors"></div>
                     </div>
                 </div>
@@ -355,38 +428,38 @@
         </section>
 
         <!-- CORE PHILOSOPHY -->
-        <section class="w-full bg-bepl-bg py-24 lg:py-32 px-6 lg:px-10 border-t border-bepl-blue/10">
+        <section class="w-full bg-bepl-bg py-16 sm:py-24 lg:py-32 px-5 sm:px-6 lg:px-10 border-t border-bepl-blue/10">
             <div class="max-w-[1500px] mx-auto w-full">
-                <div class="text-center mb-16 lg:mb-24 reveal">
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-4 block">Our Ethos</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif text-bepl-text-main">Vision & Mission.</h2>
+                <div class="text-center mb-10 sm:mb-16 lg:mb-24 reveal">
+                    <span class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-bepl-gold mb-3 sm:mb-4 block">Our Ethos</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-bepl-text-main">Vision & Mission.</h2>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
                     <!-- Vision -->
-                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group">
-                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-6 sm:p-8 hover:border-bepl-gold/40 transition-colors group">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-5 sm:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                         <h4 class="text-lg font-serif text-bepl-text-main mb-3">Our Vision</h4>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed">To stand as the undisputed global benchmark in human resource provisioning and workforce excellence.</p>
                     </article>
                     
                     <!-- Clients -->
-                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.1s;">
-                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-6 sm:p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.1s;">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-5 sm:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         <h4 class="text-lg font-serif text-bepl-text-main mb-3">Clients</h4>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Forging enduring partnerships by delivering superior, bespoke workforce solutions that consistently drive your business success.</p>
                     </article>
 
                     <!-- Employees -->
-                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.2s;">
-                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-6 sm:p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.2s;">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-5 sm:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         <h4 class="text-lg font-serif text-bepl-text-main mb-3">Employees</h4>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Cultivating a dynamic, seamless organization that champions innovation, incubates raw talent, and rewards excellence.</p>
                     </article>
 
                     <!-- Associates & Community -->
-                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.3s;">
-                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <article class="reveal bg-bepl-card border border-bepl-blue/10 shadow-sm p-6 sm:p-8 hover:border-bepl-gold/40 transition-colors group" style="transition-delay: 0.3s;">
+                        <svg class="w-8 h-8 text-bepl-blue group-hover:text-bepl-gold transition-colors mb-5 sm:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <h4 class="text-lg font-serif text-bepl-text-main mb-3">Associates & Community</h4>
                         <p class="text-sm font-medium text-bepl-text-main leading-relaxed">Nurturing symbiotic relationships with our service partners while actively propelling the economic growth of our nation.</p>
                     </article>
@@ -395,29 +468,29 @@
         </section>
     </main>
 
-    <footer class="w-full bg-bepl-dark border-t border-bepl-gold/20 relative overflow-hidden z-50">
+    <footer class="w-full bg-bepl-dark border-t border-bepl-gold/20 relative overflow-hidden z-30">
         
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[1px] bg-gradient-to-r from-transparent via-bepl-gold/50 to-transparent shadow-[0_0_30px_rgba(183,146,78,0.2)]"></div>
 
-        <div class="max-w-[1200px] mx-auto w-full px-6 lg:px-10 pt-20 pb-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-20">
+        <div class="max-w-[1200px] mx-auto w-full px-5 sm:px-6 lg:px-10 pt-14 sm:pt-20 pb-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-8 mb-14 sm:mb-20">
                 
                 <div class="md:col-span-5 flex flex-col items-start">
                     <a href="index.html" class="mb-4 inline-block border-none outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">
-                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd Logo" class="h-12 lg:h-16 w-auto object-contain transform scale-[1.1] lg:scale-[1.2] origin-left">
+                        <img src="bepllogo.png" alt="Bhatia Employment Pvt Ltd Logo" class="h-11 sm:h-12 lg:h-16 w-auto object-contain transform scale-[1.1] lg:scale-[1.2] origin-left">
                     </a>
-                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed mb-8 max-w-md">
+                    <p class="text-sm font-medium text-bepl-text-main leading-relaxed mb-6 sm:mb-8 max-w-md">
                         We don't just fill seats; we engineer global workforces. Delivering elite, zero-risk talent acquisition with absolute logistical precision.
                     </p>
-                    <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-4 inline-block">
+                    <div class="bg-bepl-blue/[0.03] border border-bepl-blue/10 rounded-sm p-3.5 sm:p-4 inline-block w-full sm:w-auto">
                         <span class="text-[10px] uppercase tracking-widest text-bepl-gold font-bold block mb-1">Govt. of India Approved</span>
-                        <span class="text-[13px] text-bepl-text-body font-mono tracking-wider">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
+                        <span class="text-[11px] sm:text-[13px] text-bepl-text-body font-mono tracking-wider break-all sm:break-normal block">Reg. No: B-1481/MUM/COM/1000+/5/9849/2021</span>
                     </div>
                 </div>
 
                 <div class="md:col-span-3 lg:col-span-3 md:pl-8 lg:pl-12">
-                    <h4 class="text-lg font-serif text-bepl-text-main mb-6">Navigation</h4>
-                    <ul class="flex flex-col space-y-4">
+                    <h4 class="text-lg font-serif text-bepl-text-main mb-5 sm:mb-6">Navigation</h4>
+                    <ul class="grid grid-cols-2 gap-y-3.5 gap-x-4 md:flex md:flex-col md:space-y-4 md:gap-0">
                         <li><a href="index.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Home</a></li>
                         <li><a href="aboutus.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">About Us</a></li>
                         <li><a href="services.html" class="text-sm font-medium text-bepl-text-main hover:text-bepl-gold hover:translate-x-1 transition-all duration-300 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">Services</a></li>
@@ -428,7 +501,7 @@
                 </div>
 
                 <div class="md:col-span-4 lg:col-span-4">
-                    <h4 class="text-lg font-serif text-bepl-text-main mb-6">Headquarters</h4>
+                    <h4 class="text-lg font-serif text-bepl-text-main mb-5 sm:mb-6 mt-8 md:mt-0">Headquarters</h4>
                     
                     <address class="not-italic flex items-start mb-6 text-sm font-medium text-bepl-text-main">
                         <svg class="w-5 h-5 text-bepl-gold mt-0.5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -439,8 +512,8 @@
                         <div class="flex items-start text-sm font-medium text-bepl-text-main w-fit">
                             <svg class="w-4 h-4 text-bepl-gold mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                             <div class="flex flex-col space-y-2">
-                                <a href="mailto:mlbhatia@bebta.com" class="hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">mlbhatia@bebta.com</a>
-                                <a href="mailto:alisha@bebta.com" class="hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm">alisha@bebta.com</a>
+                                <a href="mailto:mlbhatia@bebta.com" class="hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm break-all sm:break-normal">mlbhatia@bebta.com</a>
+                                <a href="mailto:alisha@bebta.com" class="hover:text-bepl-gold transition-colors duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold rounded-sm break-all sm:break-normal">alisha@bebta.com</a>
                             </div>
                         </div>
                         
@@ -462,16 +535,16 @@
                     </div>
 
                     <div class="flex items-center space-x-4">
-                        <a href="#" aria-label="LinkedIn" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="LinkedIn" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         </a>
-                        <a href="#" aria-label="X" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="X" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </a>
-                        <a href="#" aria-label="Instagram" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="Instagram" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         </a>
-                        <a href="#" aria-label="Facebook" class="w-12 h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
+                        <a href="#" aria-label="Facebook" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-bepl-gold flex items-center justify-center text-bepl-gold hover:bg-bepl-gold hover:text-white hover:shadow-[0_0_20px_rgba(183,146,78,0.5)] transform hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bepl-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                         </a>
                     </div>
@@ -479,13 +552,51 @@
             </div>
 
             <div class="border-t border-bepl-blue/10 pt-8 flex justify-center items-center">
-                <p class="text-sm font-medium text-bepl-text-main text-center">© 2026 Bhatia Employment Pvt Ltd. All rights reserved.</p>
+                <p class="text-xs sm:text-sm font-medium text-bepl-text-main text-center">© 2026 Bhatia Employment Pvt Ltd. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            
+            // MOBILE MENU LOGIC
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const line1 = document.getElementById('burger-line-1');
+            const line2 = document.getElementById('burger-line-2');
+            let isMenuOpen = false;
+            
+            if (menuBtn && mobileMenu) {
+                const toggleMenu = () => {
+                    isMenuOpen = !isMenuOpen;
+                    menuBtn.setAttribute('aria-expanded', isMenuOpen);
+                    if (isMenuOpen) {
+                        mobileMenu.classList.add('menu-open');
+                        document.body.style.overflow = 'hidden';
+                        line1.classList.add('rotate-45', 'translate-y-[4px]');
+                        line2.classList.remove('w-4', 'mt-1.5');
+                        line2.classList.add('w-6', '-rotate-45', '-translate-y-[3.5px]', 'bg-bepl-gold');
+                    } else {
+                        mobileMenu.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                        line1.classList.remove('rotate-45', 'translate-y-[4px]');
+                        line2.classList.remove('w-6', '-rotate-45', '-translate-y-[3.5px]', 'bg-bepl-gold');
+                        line2.classList.add('w-4', 'mt-1.5');
+                    }
+                };
+
+                menuBtn.addEventListener('click', toggleMenu);
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => { if (isMenuOpen) toggleMenu(); });
+                });
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 1024 && isMenuOpen) toggleMenu();
+                });
+            }
+
+            // REVEAL ANIMATIONS
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { 
                     if (entry.isIntersecting) {
